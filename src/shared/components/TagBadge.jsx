@@ -1,13 +1,14 @@
 import { Badge } from "@/components/ui/badge";
-
-export const TagBadge = ({ tag, onClick }) => {
+import { cn } from "@/lib/utils";
+export const TagBadge = ({ tag, onClick, rightSlot, className }) => {
   return (
     <Badge
       key={tag.id}
-      className="m-1 bg-amber-500 font-bold"
+      className={cn("m-1 bg-amber-500 font-bold", className)}
       onClick={() => onClick && onClick()}
     >
       #{tag.content}
+      {rightSlot && rightSlot}
     </Badge>
   );
 };

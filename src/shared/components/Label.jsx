@@ -1,8 +1,11 @@
 import { Label as LabelComponent } from "@/components/ui/label";
-
-export const Label = ({ children, ...props }) => {
+import { cn } from "@/lib/utils";
+export const Label = ({ children, className, ...props }) => {
   return (
-    <LabelComponent className="text-sm font-medium pl-1" {...props}>
+    <LabelComponent
+      className={cn("text-sm font-medium pl-1", className)}
+      {...props}
+    >
       {children}
     </LabelComponent>
   );
