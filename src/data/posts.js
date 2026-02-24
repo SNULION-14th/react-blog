@@ -4,7 +4,7 @@ export const posts = [
     id: 1,
     title: "#1 post",
     content: "첫번째 게시물입니다",
-    author: { id: 1, username: "주현" },
+    author: { id: 1, username: "수안" },
     tags: [
       { id: 1, content: "멋사" },
       { id: 2, content: "치즈" },
@@ -17,10 +17,10 @@ export const posts = [
     id: 2,
     title: "#2 post",
     content: "두번째 게시물입니다",
-    author: { id: 2, username: "세안" },
+    author: { id: 2, username: "수현" },
     tags: [
       { id: 1, content: "멋사" },
-      { id: 4, content: "멋쟁이김세안" },
+      { id: 4, content: "멋쟁이반수현" },
     ],
     like_users: [4],
     created_at: "2024-02-04T07:42:50.658501Z",
@@ -29,7 +29,7 @@ export const posts = [
     id: 3,
     title: "#3 post",
     content: "세번째 게시물입니다",
-    author: { id: 3, username: "수혁" },
+    author: { id: 3, username: "준영" },
     tags: [
       { id: 5, content: "회장님" },
       { id: 6, content: "연예인" },
@@ -41,7 +41,7 @@ export const posts = [
     id: 4,
     title: "#4 post",
     content: "네번째 게시물입니다",
-    author: { id: 4, username: "유진" },
+    author: { id: 4, username: "수민" },
     tags: [
       { id: 7, content: "일잘러" },
       { id: 8, content: "큐트" },
@@ -53,7 +53,7 @@ export const posts = [
     id: 5,
     title: "#5 post",
     content: "다섯번째 게시물입니다",
-    author: { id: 5, username: "어진" },
+    author: { id: 5, username: "지원" },
     tags: [
       { id: 1, content: "멋사" },
       { id: 9, content: "쏘스윗" },
