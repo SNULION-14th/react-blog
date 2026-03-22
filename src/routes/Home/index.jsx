@@ -17,10 +17,53 @@ export default function Home() {
               placeholder="태그를 검색하세요"
             />
           </div>
+          <div className="max-w-full flex justify-center mt-5">
+            <p className="text-sm text-gray-500">
+              {posts
+                .flatMap((post) => post.tags)
+                .map((tag, index) => (
+                  <span
+                    key={tag.id}
+                    className="inline-block bg-orange-400 text-white font-bold text-xs px-2.5 py-1 rounded-md mr-2"
+                  >
+                    #{tag.content}
+                  </span>
+                ))}
+            </p>
+          </div>
         </div>
 
-        <div className="mx-auto grid grid-cols-1 gap-y-4 md:grid-cols-2 lg:grid-cols-3 px-10 mt-10 lg:w-[950px] md:w-[640px] w-[320px]">
-          {/* TODO: 검색 결과 포스트 만들기 */}
+        <div className="mx-auto grid grid-cols-1 gap-y-4 gap-x-6 md:grid-cols-2 lg:grid-cols-3 px-10 mt-10 lg:w-[950px] md:w-[640px] w-[320px]">
+          {posts.map((post) => (
+            <div
+              key={post.id}
+              className="border min-h-[250px] rounded-xl p-4 flex flex-col items-start ring-2 ring-gray-300/50"
+            >
+              <h2 className="text-2xl font-bold capitalize">{post.title}</h2>
+              <p className="mt-2 text-sm text-gray-500">
+                {post.author.username}
+              </p>
+              <div className="flex-1 w-full flex items-center">
+                <div className="flex flex-wrap justify-start gap-2 ml-4">
+                  {post.tags.map((tag) => (
+                    <span
+                      key={tag.id}
+                      className="inline-block bg-orange-400 text-white font-bold text-xs px-2.5 py-1 rounded-md"
+                    >
+                      #{tag.content}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="mt-auto h-7">
+                {post.like_users.length > 0 && (
+                  <span className="text-base font-bold">
+                    ❤️ {post.like_users.length}
+                  </span>
+                )}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </>
