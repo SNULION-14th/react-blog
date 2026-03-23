@@ -30,10 +30,7 @@ export const posts = [
     title: "#3 post",
     content: "세번째 게시물입니다",
     author: { id: 3, username: "준영" },
-    tags: [
-      { id: 5, content: "회장님" },
-      { id: 6, content: "연예인" },
-    ],
+    tags: [{ id: 5, content: "회장님" }],
     like_users: [],
     created_at: "2024-02-04T07:42:50.658501Z",
   },
@@ -57,6 +54,7 @@ export const posts = [
     tags: [
       { id: 1, content: "멋사" },
       { id: 9, content: "쏘스윗" },
+      { id: 10, content: "귀요미" },
     ],
     like_users: [3],
     created_at: "2024-02-04T07:42:50.658501Z",

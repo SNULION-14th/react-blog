@@ -1,11 +1,22 @@
 import { Card, CardContent } from "@/components/ui/card";
 
 export const PostPreview = ({ post }) => {
+  const tagCount = post.tags.length;
+
+  const cardBackgroundClass =
+    tagCount >= 3
+      ? "bg-amber-50"
+      : tagCount === 2
+        ? "bg-rose-50"
+        : "bg-sky-50";
+
   return (
-    <Card className="h-full rounded-3xl border-stone-200 bg-white shadow-sm transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg">
+    <Card
+      className={`h-full rounded-3xl border-stone-200 shadow-sm transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg ${cardBackgroundClass}`}
+    >
       <CardContent className="flex h-full min-h-72 flex-col gap-5 p-6 text-left">
         <div className="space-y-2">
-          <h2 className="text-4xl font-black tracking-tight text-stone-950">
+          <h2 className="text-2xl font-bold text-stone-950">
             {post.title}
           </h2>
           <p className="text-sm font-medium text-stone-500">

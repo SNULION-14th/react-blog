@@ -22,11 +22,8 @@ const signUpFields = [
 
 export default function SignUp() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-[radial-gradient(circle_at_top,_#fde68a_0%,_#fff7ed_26%,_#ffffff_70%)] px-5 py-10">
-      <AuthCard
-        title="회원가입"
-        description="기본 정보를 입력하고 블로그 활동을 시작할 준비를 해보세요."
-      >
+    <main className="flex min-h-screen items-center justify-center bg-white px-5 py-10">
+      <AuthCard title="회원가입" description="">
         <form className="space-y-4">
           {signUpFields.map((field) => (
             <div key={field.id} className="space-y-2 text-left">
@@ -42,7 +39,7 @@ export default function SignUp() {
             </div>
           ))}
 
-          <Button className="h-12 w-full rounded-xl bg-stone-900 text-sm text-white hover:!bg-amber-500">
+          <Button className="h-9 w-full rounded-md bg-stone-100 px-5 text-base font-bold text-black hover:!bg-amber-400 hover:!text-white">
             회원가입
           </Button>
         </form>

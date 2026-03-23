@@ -9,22 +9,13 @@ export default function Home() {
   const filteredTags = tags.filter((tag) => tag.includes(searchValue.trim()));
 
   return (
-    <div className="min-h-screen bg-[linear-gradient(180deg,#fffaf0_0%,#ffffff_24%,#fff7ed_100%)]">
+    <div className="min-h-screen bg-white">
       <Header />
       <main className="mx-auto flex max-w-6xl flex-col px-5 py-14 sm:px-8">
         <section className="flex flex-col items-center gap-8 text-center">
-          <div className="space-y-4">
-            <p className="text-sm font-semibold uppercase tracking-[0.35em] text-amber-500">
-              SNULION ARCHIVE
-            </p>
-            <h1 className="text-5xl font-black uppercase tracking-tight text-stone-950 sm:text-7xl">
-              my blog
-            </h1>
-            <p className="max-w-2xl text-sm leading-6 text-stone-500 sm:text-base">
-              관심 있는 태그로 글을 탐색하고, 다양한 멋사 구성원의 포스트를 한눈에
-              살펴보세요.
-            </p>
-          </div>
+          <h1 className="text-6xl uppercase text-black">
+            my blog
+          </h1>
 
           <div className="w-full max-w-xl">
             <Input
