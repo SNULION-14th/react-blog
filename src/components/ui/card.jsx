@@ -79,7 +79,7 @@ function CardFooter({ className, like_count, ...props }) {
       className={cn("flex items-center p-6 pt-0", className)}
       {...props}
     >
-      ❤️ {like_count}
+      {like_count > 0 ? `❤️ ${like_count}` : null}
     </div>
   );
 }
