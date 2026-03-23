@@ -89,7 +89,7 @@ export default function SignUp() {
         </CardContent>
 
         <CardFooter className="flex flex-col items-center gap-4 px-10 pb-10 mt-4">
-          <Button className="w-full h-12 bg-gray-100 text-black focus-visible!:bg-amber-500 hover:text-white border-none shadow-none font-bold text-center transition-all duration-300 variant=ghost">
+          <Button className="w-full h-12 bg-gray-100 text-black hover:!bg-amber-500 hover:text-white border-none shadow-none font-bold text-center transition-all duration-300 variant=ghost">
             회원가입
           </Button>
           <Link to="/signin" className="text-sm text-gray-500 hover:underline text-center">

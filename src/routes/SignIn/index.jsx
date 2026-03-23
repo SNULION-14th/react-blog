@@ -39,10 +39,10 @@ export default function SignIn() {
         </CardContent>
 
         <CardFooter className="flex justify-center gap-3 pb-10 px-10">
-          <Button className="flex-1 h-12 bg-gray-100 text-black focus-visible:!bg-amber-500 hover:text-white border-none shadow-none transition-all duration-300" variant="ghost">
+          <Button className="flex-1 h-12 bg-gray-100 text-black hover:!bg-amber-500 hover:text-white border-none shadow-none transition-all duration-300">
             로그인
           </Button>
-          <Button variant="ghost" className="flex-1 h-12 bg-gray-100 text-black focus-visible:!bg-amber-500 hover:text-white border-none shadow-none transition-all duration-300"> 
+          <Button className="flex-1 h-12 bg-gray-100 text-black hover:!bg-amber-500 hover:text-white border-none shadow-none transition-all duration-300"> 
             회원가입
           </Button>
         </CardFooter>
