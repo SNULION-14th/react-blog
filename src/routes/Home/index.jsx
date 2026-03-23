@@ -29,7 +29,7 @@ export default function Home() {
             />
           </div>
 
-          <div className="flex flex-wrap justify-center gap-2 mt-6 max-w-2xl px-4">
+          <div className="flex flex-wrap justify-center gap-2 mt-6 px-4">
             {allTags.map((tag, index) => (
               <span 
                 key={index} 
@@ -46,19 +46,30 @@ export default function Home() {
           <div className="mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-10 mt-10 lg:w-[950px] md:w-[640px] w-full">
             {posts.map((post) => (
               <Card key={post.id} className="w-full border border-neutral-100 rounded-2xl hover:shadow-md transition-shadow">
-                <CardHeader className="flex items-start">
+                <CardHeader className="flex items-start mb-5">
                   <CardTitle className="flex text-xl font-bold line-clamp-1">{post.title}</CardTitle>
-                  <span className="text-xs font-bold text-amber-600">{post.author.username}</span>
+                  <span className="text-xs font-bold text-stone-500">{post.author.username}</span>
                 </CardHeader>
                 <CardContent>
-                  <div className="flex flex-wrap gap-1">
+                  <div className="flex flex-wrap gap-2">
                     {post.tags.map((tag) => (
-                      <span key={tag.id} className="text-[10px] bg-gray-100 px-2 py-0.5 rounded text-gray-500">
+                      <span key={tag.id} className="text-[12px] bg-orange-300 px-2 py-0.5 rounded-full text-white">
                         #{tag.content}
                       </span>
                     ))}
                   </div>
                 </CardContent>
+
+                <CardFooter className="pt-2 border-t border-neutral-50 flex items-start gap-2">
+                  <div className="flex items-center gap-1.5 group cursor-pointer">
+                    <span>
+                      {post.like_users.length > 0 ? '❤️' : ''}
+                    </span>
+                    <span className="text-sm font-bold text-gray-600">
+                      {post.like_users.length > 0? post.like_users.length: ''}
+                    </span>
+                  </div>
+                </CardFooter>
               </Card>
             ))}
           </div>
