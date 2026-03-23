@@ -1,6 +1,13 @@
 import { posts } from "../../data/posts";
-
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from "@/components/ui/card";
 import { Header, Input } from "@/shared/components";
+
 export default function Home() {
   return (
     <>
@@ -8,7 +15,7 @@ export default function Home() {
       <div className="flex flex-col py-14">
         <div className="flex flex-col justify-center items-center mb-5">
           <div className="w-full mb-16 flex justify-center">
-            <h1 className="uppercase text-6xl text-black">my blog</h1>
+            <h1 className="uppercase text-6xl text-black">MY BLOG</h1>
           </div>
           <div className="w-[90vw] max-w-md flex justify-center">
             <Input
@@ -21,6 +28,7 @@ export default function Home() {
 
         <div className="mx-auto grid grid-cols-1 gap-y-4 md:grid-cols-2 lg:grid-cols-3 px-10 mt-10 lg:w-[950px] md:w-[640px] w-[320px]">
           {/* TODO: 검색 결과 포스트 만들기 */}
+          <p>hey</p>
         </div>
       </div>
     </>
