@@ -10,7 +10,7 @@ export const useMediaQuery = (query) => {
 
   const handleChange = useCallback(() => {
     setMatches(getQueryMatches(query));
-  }, []);
+  }, [query]);
 
   useEffect(() => {
     const matchMedia = window.matchMedia(query);
@@ -18,7 +18,7 @@ export const useMediaQuery = (query) => {
     matchMedia.addEventListener("change", handleChange);
 
     return () => matchMedia.removeEventListener("change", handleChange);
-  }, [query]);
+  }, [query, handleChange]);
 
   return matches;
 };

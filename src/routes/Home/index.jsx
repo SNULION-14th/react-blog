@@ -1,28 +1,63 @@
+import { useState } from "react";
 import { posts } from "../../data/posts";
 
-import { Header, Input } from "@/shared/components";
+import { Header, Input, PostPreview } from "@/shared/components";
 export default function Home() {
+  const [searchValue, setSearchValue] = useState("");
+
+  const tags = [...new Set(posts.flatMap((post) => post.tags.map((tag) => tag.content)))];
+  const filteredTags = tags.filter((tag) => tag.includes(searchValue.trim()));
+
   return (
-    <>
+    <div className="min-h-screen bg-[linear-gradient(180deg,#fffaf0_0%,#ffffff_24%,#fff7ed_100%)]">
       <Header />
-      <div className="flex flex-col py-14">
-        <div className="flex flex-col justify-center items-center mb-5">
-          <div className="w-full mb-16 flex justify-center">
-            <h1 className="uppercase text-6xl text-black">my blog</h1>
+      <main className="mx-auto flex max-w-6xl flex-col px-5 py-14 sm:px-8">
+        <section className="flex flex-col items-center gap-8 text-center">
+          <div className="space-y-4">
+            <p className="text-sm font-semibold uppercase tracking-[0.35em] text-amber-500">
+              SNULION ARCHIVE
+            </p>
+            <h1 className="text-5xl font-black uppercase tracking-tight text-stone-950 sm:text-7xl">
+              my blog
+            </h1>
+            <p className="max-w-2xl text-sm leading-6 text-stone-500 sm:text-base">
+              관심 있는 태그로 글을 탐색하고, 다양한 멋사 구성원의 포스트를 한눈에
+              살펴보세요.
+            </p>
           </div>
-          <div className="w-[90vw] max-w-md flex justify-center">
+
+          <div className="w-full max-w-xl">
             <Input
-              className="focus-visible:ring-amber-500 focus-visible:ring-2 focus-visible:border-transparent selection:bg-amber-300 selection:text-black"
+              className="h-12 rounded-full border-stone-200 bg-white px-5 text-sm shadow-sm focus-visible:ring-amber-500"
               type="text"
               placeholder="태그를 검색하세요"
+              value={searchValue}
+              onChange={(event) => setSearchValue(event.target.value)}
             />
           </div>
-        </div>
 
-        <div className="mx-auto grid grid-cols-1 gap-y-4 md:grid-cols-2 lg:grid-cols-3 px-10 mt-10 lg:w-[950px] md:w-[640px] w-[320px]">
-          {/* TODO: 검색 결과 포스트 만들기 */}
-        </div>
-      </div>
-    </>
+          <div className="flex max-w-4xl flex-wrap justify-center gap-2">
+            {filteredTags.length > 0 ? (
+              filteredTags.map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-full bg-amber-400 px-3 py-1 text-xs font-semibold text-white shadow-sm"
+                >
+                  #{tag}
+                </span>
+              ))
+            ) : (
+              <p className="text-sm text-stone-400">일치하는 태그가 없습니다.</p>
+            )}
+          </div>
+        </section>
+
+        <section className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {posts.map((post) => (
+            <PostPreview key={post.id} post={post} />
+          ))}
+        </section>
+      </main>
+    </div>
   );
 }
