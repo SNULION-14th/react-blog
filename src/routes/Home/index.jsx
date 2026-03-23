@@ -21,6 +21,7 @@ export default function Home() {
             <p className="text-sm text-gray-500">
               {posts
                 .flatMap((post) => post.tags)
+                .slice(0, 7)
                 .map((tag, index) => (
                   <span
                     key={tag.id}
