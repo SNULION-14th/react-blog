@@ -34,36 +34,49 @@ export default function Home() {
         </div>
 
         <div className="mx-auto grid grid-cols-1 gap-y-4 gap-x-6 md:grid-cols-2 lg:grid-cols-3 px-10 mt-10 lg:w-[950px] md:w-[640px] w-[320px]">
-          {posts.map((post) => (
-            <div
-              key={post.id}
-              className="border min-h-[250px] rounded-xl p-4 flex flex-col items-start ring-2 ring-gray-300/50"
-            >
-              <h2 className="text-2xl font-bold capitalize">{post.title}</h2>
-              <p className="mt-2 text-sm text-gray-500">
-                {post.author.username}
-              </p>
-              <div className="flex-1 w-full flex items-center">
-                <div className="flex flex-wrap justify-start gap-2 ml-4">
-                  {post.tags.map((tag) => (
-                    <span
-                      key={tag.id}
-                      className="inline-block bg-orange-400 text-white font-bold text-xs px-2.5 py-1 rounded-md"
-                    >
-                      #{tag.content}
+          {posts.map((post) => {
+            const color_palette = [
+              "bg-gray-100",
+              "bg-orange-100",
+              "bg-yellow-100",
+              "bg-blue-100",
+              "bg-pink-100",
+            ];
+            const bg_color =
+              color_palette[post.tags.length % color_palette.length];
+            return (
+              <div
+                key={post.id}
+                className={`border min-h-[250px] rounded-xl p-4 flex flex-col items-start ring-2 ring-gray-300/50 ${bg_color}`}
+              >
+                <h2 className="text-2xl font-bold capitalize">{post.title}</h2>
+                <p className="mt-2 text-sm text-gray-500">
+                  {post.author.username}
+                </p>
+                <div className="flex-1 w-full flex items-center">
+                  <div className="flex flex-wrap justify-start gap-2 ml-4">
+                    {post.tags.map((tag) => {
+                      return (
+                        <span
+                          key={tag.id}
+                          className="inline-block bg-orange-400 text-white font-bold text-xs px-2.5 py-1 rounded-md"
+                        >
+                          #{tag.content}
+                        </span>
+                      );
+                    })}
+                  </div>
+                </div>
+                <div className="mt-auto h-7">
+                  {post.like_users.length > 0 && (
+                    <span className="text-base font-bold">
+                      ❤️ {post.like_users.length}
                     </span>
-                  ))}
+                  )}
                 </div>
               </div>
-              <div className="mt-auto h-7">
-                {post.like_users.length > 0 && (
-                  <span className="text-base font-bold">
-                    ❤️ {post.like_users.length}
-                  </span>
-                )}
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </>
