@@ -1,7 +1,16 @@
 import { posts } from "../../data/posts";
-
+import { useState } from "react";
 import { Header, Input } from "@/shared/components";
 export default function Home() {
+  const [search, setSearch] = useState("");
+  const color_palette = [
+    "bg-gray-100",
+    "bg-orange-100",
+    "bg-yellow-100",
+    "bg-blue-100",
+    "bg-pink-100",
+  ];
+
   return (
     <>
       <Header />
@@ -12,6 +21,8 @@ export default function Home() {
           </div>
           <div className="w-[90vw] max-w-md flex justify-center">
             <Input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
               className="focus-visible:ring-amber-500 focus-visible:ring-2 focus-visible:border-transparent selection:bg-amber-300 selection:text-black"
               type="text"
               placeholder="태그를 검색하세요"
@@ -21,10 +32,18 @@ export default function Home() {
             <p className="text-sm text-gray-500">
               {posts
                 .flatMap((post) => post.tags)
-                .slice(0, 7)
+                .filter(
+                  (tag, index, self) =>
+                    self.findIndex((t) => t.content === tag.content) === index,
+                )
+                .filter((tag) =>
+                  tag.content.toLowerCase().includes(search.toLowerCase()),
+                )
+                .slice(0, 10)
                 .map((tag, index) => (
                   <span
                     key={tag.id}
+                    onClick={() => setSearch(tag.content)}
                     className="inline-block bg-orange-400 text-white font-bold text-xs px-2.5 py-1 rounded-md mr-2"
                   >
                     #{tag.content}
@@ -36,15 +55,8 @@ export default function Home() {
 
         <div className="mx-auto grid grid-cols-1 gap-y-4 gap-x-6 md:grid-cols-2 lg:grid-cols-3 px-10 mt-10 lg:w-[950px] md:w-[640px] w-[320px]">
           {posts.map((post) => {
-            const color_palette = [
-              "bg-gray-100",
-              "bg-orange-100",
-              "bg-yellow-100",
-              "bg-blue-100",
-              "bg-pink-100",
-            ];
             const bg_color =
-              color_palette[post.tags.length % color_palette.length];
+              color_palette[post.id % color_palette.length] || "bg-gray-100";
             return (
               <div
                 key={post.id}
