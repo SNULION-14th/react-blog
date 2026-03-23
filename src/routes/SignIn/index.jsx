@@ -13,16 +13,16 @@ export default function SignIn() {
   return (
     <>
       <div>
-        <Card className="card signin-container">
-          <CardHeader className="card signin-header">
+        <Card>
+          <CardHeader>
             <img src={logo} alt="logo" />
             <CardTitle>로그인</CardTitle>
           </CardHeader>
-          <CardContent className="card signin-content">
+          <CardContent>
             <Input type="text" placeholder="아이디를 입력하세요"></Input>
             <Input type="password" placeholder="비밀번호를 입력하세요"></Input>
           </CardContent>
-          <CardFooter className="card signin-footer">
+          <CardFooter>
             <Button variant="default" size="default">
               로그인
             </Button>
