@@ -1,8 +1,7 @@
-import { Input, Button } from "@/shared/components";
+import { Button } from "@/shared/components";
 import { InputSection } from "@/components/ui/inputSection";
 import logo from "@/assets/logo.png";
 
-//TODO: 회원가입 페이지 구현
 export default function SignUp() {
   return (
     <div className="flex flex-col justify-center items-center w-full min-h-screen">

@@ -1,4 +1,4 @@
-import { Input, Button } from "@/shared/components";
+import { Input } from "@/shared/components";
 
 function InputSection({ className, title, type, placeholder, ...props }) {
   return (

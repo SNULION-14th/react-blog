@@ -1,7 +1,7 @@
-import { Input, Button } from "@/shared/components";
+import { Button } from "@/shared/components";
+import { InputSection } from "@/components/ui/inputSection";
 import logo from "@/assets/logo.png";
 
-//TODO: 로그인 페이지 구현
 export default function SignIn() {
   return (
     <div className="flex flex-col justify-center items-center w-full min-h-screen">
@@ -9,16 +9,14 @@ export default function SignIn() {
         <img src={logo} className="w-40" />
         <p className="font-bold text-2xl">로그인</p>
         <div className="flex flex-col gap-2 px-10 mt-10 mb-5 w-full">
-          <Input
-            className="focus-visible:ring-amber-500 focus-visible:ring-2 focus-visible:border-transparent selection:bg-amber-300 selection:text-black"
+          <InputSection
             type="text"
             placeholder="아이디를 입력하세요"
-          />
-          <Input
-            className="focus-visible:ring-amber-500 focus-visible:ring-2 focus-visible:border-transparent selection:bg-amber-300 selection:text-black"
+          ></InputSection>
+          <InputSection
             type="password"
             placeholder="비밀번호를 입력하세요"
-          />
+          ></InputSection>
         </div>
         <div className="flex gap-2 pb-10">
           <Button>로그인</Button>
