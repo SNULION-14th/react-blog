@@ -34,7 +34,6 @@ export default function Home() {
             <TagList contents={searchTags(posts, input)}></TagList>
           </div>
           <div className="mx-auto grid grid-cols-1 gap-y-4 md:grid-cols-2 lg:grid-cols-3 px-10 mt-10 lg:w-[950px] md:w-[640px] w-[320px] gap-10">
-            {/* TODO: 검색 결과 포스트 만들기 */}
             {posts.map((post) => (
               <Card cardId={post.id} post={post}></Card>
             ))}
