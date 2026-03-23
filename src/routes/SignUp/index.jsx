@@ -48,7 +48,7 @@ export default function SignUp() {
           />
           <label className="flex text-sm font-bold text-black ml-1">이름</label>
           <Input
-            type="password"
+            type="text"
             placeholder="이름을 입력하세요"
             className="w-full text-base py-3 border-neutral-200 placeholder:text-neutral-400 focus-visible:ring-black"
           />
@@ -56,19 +56,19 @@ export default function SignUp() {
             이메일
           </label>
           <Input
-            type="password"
+            type="text"
             placeholder="이메일을 입력하세요"
             className="w-full text-base py-3 border-neutral-200 placeholder:text-neutral-400 focus-visible:ring-black"
           />
           <label className="flex text-sm font-bold text-black ml-1">학교</label>
           <Input
-            type="password"
+            type="text"
             placeholder="학교를 입력하세요"
             className="w-full text-base py-3 border-neutral-200 placeholder:text-neutral-400 focus-visible:ring-black"
           />
           <label className="flex text-sm font-bold text-black ml-1">전공</label>
           <Input
-            type="password"
+            type="text"
             placeholder="전공을 입력하세요"
             className="w-full text-base py-3 border-neutral-200 placeholder:text-neutral-400 focus-visible:ring-black"
           />
@@ -78,7 +78,7 @@ export default function SignUp() {
         <CardFooter className="flex justify-center pt-1 pb-6 px-10">
           <Button
             variant="secondary"
-            className="w-full text-base font-semibold text-black bg-neutral-100 hover:bg-neutral-200"
+            className="w-full text-base font-semibold text-black bg-neutral-100 hover:!bg-orange-400 hover:text-white"
           >
             회원가입
           </Button>

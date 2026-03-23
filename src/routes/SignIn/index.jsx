@@ -36,15 +36,12 @@ export default function SignIn() {
 
         <CardFooter className="flex justify-center gap-4 pt-2 pb-12 px-10">
           <Button
-            variant="secondary"
-            className="text-base font-semibold text-black bg-neutral-100 hover:bg-neutral-200 py-6 px-10"
+            variant="orange"
+            className="text-base font-semibold text-black bg-neutral-100 hover:!bg-orange-400 hover:text-white py-6 px-10"
           >
             로그인
           </Button>
-          <Button
-            variant="secondary"
-            className="text-base font-semibold text-black bg-neutral-100 hover:bg-neutral-200 py-6 px-10"
-          >
+          <Button className="text-base font-semibold text-black bg-neutral-100 hover:!bg-orange-400 hover:text-white py-6 px-10">
             회원가입
           </Button>
         </CardFooter>
