@@ -8,21 +8,20 @@ import {
 } from "@/components/ui/card";
 import { Button, Input } from "@/shared/components";
 
-//TODO: 로그인 페이지 구현
 export default function SignIn() {
   return (
     <>
-      <div>
-        <Card>
+      <div className="w-full min-h-screen flex items-center justify-center">
+        <Card className="w-md flex flex-col items-center justify-center">
           <CardHeader>
-            <img src={logo} alt="logo" />
-            <CardTitle>로그인</CardTitle>
+            <img src={logo} alt="logo" className="w-50" />
+            <CardTitle className="text-2xl">로그인</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="flex flex-col items-center justify-center w-full pb-1 m-2 gap-2">
             <Input type="text" placeholder="아이디를 입력하세요"></Input>
             <Input type="password" placeholder="비밀번호를 입력하세요"></Input>
           </CardContent>
-          <CardFooter>
+          <CardFooter className="flex flex-row items-center justify-center p-2 mb-5 gap-2">
             <Button variant="default" size="default">
               로그인
             </Button>
