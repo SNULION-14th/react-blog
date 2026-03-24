@@ -1,6 +1,14 @@
 import { posts } from "../../data/posts";
 
 import { Header, Input } from "@/shared/components";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from "@/components/ui/card";
+
 export default function Home() {
   return (
     <>
@@ -18,10 +26,7 @@ export default function Home() {
             />
           </div>
         </div>
-
-        <div className="mx-auto grid grid-cols-1 gap-y-4 md:grid-cols-2 lg:grid-cols-3 px-10 mt-10 lg:w-[950px] md:w-[640px] w-[320px]">
-          {/* TODO: 검색 결과 포스트 만들기 */}
-        </div>
+        <div className="mx-auto grid grid-cols-1 gap-y-4 md:grid-cols-2 lg:grid-cols-3 px-10 mt-10 lg:w-[950px] md:w-[640px] w-[320px]"></div>
       </div>
     </>
   );
