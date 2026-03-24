@@ -5,8 +5,8 @@ export const Button = (props) => {
   return (
     <ButtonComponent
       className={cn(
-        "p-3 uppercase text-lg bg-stone-200 text-black hover:!bg-amber-400 hover:text-white",
-        props.className
+        "p-3 w-full uppercase text-lg !bg-stone-100 text-black hover:!bg-amber-400 hover:text-white",
+        props.className,
       )}
       {...props}
     >
