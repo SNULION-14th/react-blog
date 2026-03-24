@@ -1,3 +1,11 @@
+import {
+  Card,
+  CardHeader,
+  CardFooter,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
 import { posts } from "../../data/posts";
 
 import { Header, Input } from "@/shared/components";
@@ -19,8 +27,47 @@ export default function Home() {
           </div>
         </div>
 
+        <div className="flex flex-row justify-center gap-1">
+          {posts.map((post) =>
+            post.tags.map((tag) => (
+              <div
+                key={tag.id}
+                className="px-2 py-1 bg-amber-500 text-white rounded-lg text-xs font-bold p-2 m-1"
+              >
+                {"#" + tag.content}
+              </div>
+            )),
+          )}
+        </div>
+
         <div className="mx-auto grid grid-cols-1 gap-y-4 md:grid-cols-2 lg:grid-cols-3 px-10 mt-10 lg:w-[950px] md:w-[640px] w-[320px]">
-          {/* TODO: 검색 결과 포스트 만들기 */}
+          {posts.map((post) => (
+            <Card key={post.id} className="p-1 mb-1 ml-5 mr-5 text-left">
+              <CardHeader>
+                <CardTitle className="text-xl">{post.title}</CardTitle>
+                <CardDescription>{post.author.username}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-wrap gap-1 ">
+                  {post.tags.map((tag) => (
+                    <div
+                      className="px-2 py-1 bg-amber-500 text-white rounded-lg text-xs font-bold p-1 mt-5 mr-0.5"
+                      key={tag.id}
+                    >
+                      {"#" + tag.content}
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+              <CardFooter>
+                <div>
+                  {post.like_users.length > 0
+                    ? "❤️" + post.like_users.length
+                    : ""}
+                </div>
+              </CardFooter>
+            </Card>
+          ))}
         </div>
       </div>
     </>
