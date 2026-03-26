@@ -26,7 +26,7 @@ export default function SignIn() {
 
         <CardContent className="flex flex-col gap-4 px-8">
           <Input placeholder="아이디를 입력하세요"></Input>
-          <Input placeholder="비밀번호를 입력하세요"></Input>
+          <Input placeholder="비밀번호를 입력하세요" type="password"></Input>
         </CardContent>
 
         <CardFooter className="flex justify-center gap-4 px-8 pb-10 pt-6">

@@ -27,9 +27,9 @@ export default function SignUp() {
           <p className="flex">아이디</p>
           <Input placeholder="아이디를 입력하세요"></Input>
           <p className="flex">비밀번호</p>
-          <Input placeholder="비밀번호를 입력하세요"></Input>
+          <Input placeholder="비밀번호를 입력하세요" type="password"></Input>
           <p className="flex">비밀번호 확인</p>
-          <Input placeholder="비밀번호를 입력하세요"></Input>
+          <Input placeholder="비밀번호를 입력하세요" type="password"></Input>
           <p className="flex">이름</p>
           <Input placeholder="이름을 입력하세요"></Input>
           <p className="flex">이메일</p>
