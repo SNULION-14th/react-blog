@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import logo from "@/assets/logo.png";
 import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 
 export default function SignIn() {
   return (
@@ -29,10 +30,18 @@ export default function SignIn() {
         </CardContent>
 
         <CardFooter className="flex justify-center gap-4 px-8 pb-10 pt-6">
-          <Button variant="secondary" size="default">
+          <Button
+            variant="secondary"
+            size="default"
+            className=" hover:!bg-amber-400 hover:text-white"
+          >
             로그인
           </Button>
-          <Button variant="secondary" size="default">
+          <Button
+            variant="secondary"
+            size="default"
+            className=" hover:!bg-amber-400 hover:text-white"
+          >
             회원가입
           </Button>
         </CardFooter>
