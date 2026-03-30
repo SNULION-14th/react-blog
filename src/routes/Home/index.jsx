@@ -1,27 +1,38 @@
 import { useState } from "react";
-import { posts } from "../../data/posts";
-import { Header, Input } from "@/shared/components";
+import { posts as initialPosts } from "../../data/posts";
+import { Header, Input, Button, PostDialog } from "@/shared/components";
+import { useAuth } from "@/shared/contexts/AuthContext";
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [posts, setPosts] = useState(initialPosts);
+  const [showDialog, setShowDialog] = useState(false);
+  const { user } = useAuth();
 
-  const filteredPosts = posts.filter((post) =>
-    post.tags.some((tag) =>
-      tag.content.toLowerCase().includes(searchTerm.toLowerCase()),
-    ),
-  );
+  const filteredPosts = searchTerm
+    ? posts.filter((post) =>
+        post.tags.some((tag) =>
+          tag.content.toLowerCase().includes(searchTerm.toLowerCase()),
+        ),
+      )
+    : posts;
 
   const categories = [
-    "멋사",
-    "치즈",
-    "냠냠",
-    "멋쟁이반수현",
-    "회장님",
-    "연예인",
-    "일잘러",
-    "큐트",
-    "쏘스윗",
+    ...new Set(posts.flatMap((post) => post.tags.map((tag) => tag.content))),
   ];
+
+  const handleCreatePost = ({ title, content, tags }) => {
+    const newPost = {
+      id: Date.now(),
+      title,
+      content,
+      author: { id: user.id, username: user.username },
+      tags: tags.map((t, i) => ({ id: Date.now() + i, content: t })),
+      like_users: [],
+      created_at: new Date().toISOString(),
+    };
+    setPosts([...posts, newPost]);
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -94,6 +105,18 @@ export default function Home() {
             ))}
           </div>
         </div>
+        {user && (
+          <div className="flex justify-center mt-10">
+            <Button onClick={() => setShowDialog(true)}>작성</Button>
+          </div>
+        )}
+
+        {showDialog && (
+          <PostDialog
+            onClose={() => setShowDialog(false)}
+            onSubmit={handleCreatePost}
+          />
+        )}
       </main>
     </div>
   );
