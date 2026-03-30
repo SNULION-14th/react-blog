@@ -53,6 +53,9 @@ export default function Home() {
     });
     const newPost = await getPostById(createResponse.postId);
     console.log("new post", newPost);
+
+    fetchPosts();
+    fetchTags();
   };
 
   // TODO: 로그인한 사용자 정보를 가져와서 PostDialog에 전달하고, 게시글 작성 버튼 추가
@@ -77,7 +80,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="mx-auto grid grid-cols-1 gap-y-4 md:grid-cols-2 lg:grid-cols-3 px-10 mt-10 lg:w-[950px] md:w-[640px] w-[320px]">
+      <div className="mx-auto grid grid-cols-1 gap-y-4 md:grid-cols-2 lg:grid-cols-3 px-10 my-10 lg:w-[950px] md:w-[640px] w-[320px]">
         {posts.map((post) => {
           if (
             post.tags
@@ -102,7 +105,12 @@ export default function Home() {
         })}
       </div>
       {/* TODO: 로그인한 사용자만 게시글 작성 버튼 표시 */}
-      {isLoggedIn ? <Button className="mt-8">작성</Button> : null}
+      {isLoggedIn ? (
+        <PostDialog
+          handleCreatePost={handleCreatePost}
+          author={username}
+        ></PostDialog>
+      ) : null}
       {/* TODO: PostDialog 컴포넌트 구현 */}
     </div>
   );
