@@ -20,11 +20,16 @@ export const PostDialog = ({ author, handleCreatePost }) => {
     e.preventDefault();
 
     const form = e.target;
+    const trimmedTag = tagInput.trim();
+    const finalTags =
+      trimmedTag && !tagList.includes(trimmedTag)
+        ? [...tagList, trimmedTag]
+        : tagList;
     handleCreatePost(
       {
         title: form.title.value,
         content: form.content.value,
-        tags: tagList,
+        tags: finalTags,
       },
       author,
     );
@@ -81,16 +86,7 @@ export const PostDialog = ({ author, handleCreatePost }) => {
           </div>
 
           <DialogFooter>
-            <DialogClose asChild>
-              <Button
-                type="submit"
-                onClick={() => {
-                  (settagList([]), setTagInput(""));
-                }}
-              >
-                작성하기
-              </Button>
-            </DialogClose>
+            <Button type="submit">작성하기</Button>
           </DialogFooter>
         </form>
       </DialogContent>
