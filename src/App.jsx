@@ -24,7 +24,6 @@ function AppContent() {
           <Route path="/signup" element={<Signup />} />
           {/* <Route path="/post/:postId" element={<PostPage />} /> */}
         </Routes>
-        <Header></Header>
       </UserProvider>
     </>
   );

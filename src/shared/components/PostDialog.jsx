@@ -1,4 +1,4 @@
-import { Input, TagBadge, Textarea, Button } from "@/shared/components";
+import { Input, Textarea, Button } from "@/shared/components";
 import { useState } from "react";
 import {
   Dialog,
@@ -19,11 +19,11 @@ export const PostDialog = ({ author, handleCreatePost }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const { title, content, tags } = <e className="target"></e>;
+    const form = e.target;
     handleCreatePost(
       {
-        title: title.value,
-        content: content.value,
+        title: form.title.value,
+        content: form.content.value,
         tags: tagList,
       },
       author,

@@ -9,7 +9,7 @@ import { useUser } from "@/shared/context";
 export default function Home() {
   const navigate = useNavigate();
   const { user, isLoggedIn } = useUser();
-  const [posts, setPosts] = useState();
+  const [posts, setPosts] = useState([]);
   const [searchTags, setSearchTags] = useState([]);
   const [tagSearchTerm, setTagSearchTerm] = useState("");
 
@@ -17,6 +17,7 @@ export default function Home() {
     fetchPosts();
     fetchTags();
   }, []);
+
   const fetchPosts = async () => {
     const posts = await getPosts();
     console.log("post fetch response", posts);
@@ -40,8 +41,10 @@ export default function Home() {
       ...post,
       author,
     });
+    console.log("create response", createResponse);
     const newPost = await getPostById(createResponse.postId);
     console.log("new post", newPost);
+
     setPosts((prev) => [...prev, newPost]);
   };
 
@@ -64,9 +67,9 @@ export default function Home() {
           />
         </div>
         <div className="flex mt-5 justify-center flex-wrap">
-          {filteredTags.map((tag) => {
-            return <TagBadge key={tag.id} tag={tag} />;
-          })}
+          {filteredTags.map((tag) => (
+            <TagBadge key={tag.id} tag={tag} />
+          ))}
         </div>
       </div>
       <div className="mx-auto grid grid-cols-1 gap-y-4 md:grid-cols-2 lg:grid-cols-3 px-10 mt-10 lg:w-[950px] md:w-[640px] w-[320px]">

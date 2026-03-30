@@ -15,16 +15,16 @@ export const SmallPost = ({ post }) => {
         <CardTitle className="text-2xl font-bold text-start">
           {post.title}
         </CardTitle>
-        <CardDescription className="text-sm text-start">
-          {post.author.username}
-        </CardDescription>
+        <CardDescription className="text-sm text-start"></CardDescription>
       </CardHeader>
       <CardContent>
         <div className="text-start">
           <span>{post.content}</span>
         </div>
         <div className="flex flex-wrap mt-5">
-          {post.tags.map((tag) => tag && <TagBadge key={tag.id} tag={tag} />)}
+          {post.tags?.map(
+            (tag, index) => tag && <TagBadge key={tag.id} tag={tag} />,
+          )}
         </div>
       </CardContent>
       <CardFooter>
