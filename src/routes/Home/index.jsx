@@ -1,28 +1,113 @@
-import { posts } from "../../data/posts";
+import { SmallPost } from "./components/SmallPost";
+import { Input, TagBadge, PostDialog, Button } from "@/shared/components";
+import { getPosts, getTags, getPostById } from "@/shared/api";
+import { createPost } from "./api";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
+import { useUser } from "@/shared/context";
 
-import { Header, Input } from "@/shared/components";
 export default function Home() {
-  return (
-    <>
-      <Header />
-      <div className="flex flex-col py-14">
-        <div className="flex flex-col justify-center items-center mb-5">
-          <div className="w-full mb-16 flex justify-center">
-            <h1 className="uppercase text-6xl text-black">my blog</h1>
-          </div>
-          <div className="w-[90vw] max-w-md flex justify-center">
-            <Input
-              className="focus-visible:ring-amber-500 focus-visible:ring-2 focus-visible:border-transparent selection:bg-amber-300 selection:text-black"
-              type="text"
-              placeholder="태그를 검색하세요"
-            />
-          </div>
-        </div>
+  const navigate = useNavigate();
+  const { isLoggedIn, userid, username, logIn, logOut } = useUser();
 
-        <div className="mx-auto grid grid-cols-1 gap-y-4 md:grid-cols-2 lg:grid-cols-3 px-10 mt-10 lg:w-[950px] md:w-[640px] w-[320px]">
-          {/* TODO: 검색 결과 포스트 만들기 */}
+  const [posts, setPosts] = useState([]);
+  const [storedTags, setStoredTags] = useState([]);
+  const [searchTags, setSearchTags] = useState([]);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      fetchPosts();
+      fetchTags();
+    } else {
+      setPosts([]);
+      setStoredTags([]);
+      setSearchTags([]);
+    }
+  }, [isLoggedIn]);
+
+  const fetchPosts = async () => {
+    const posts = await getPosts();
+    setPosts(posts);
+    console.log("post fetch response", posts);
+  };
+
+  const fetchTags = async () => {
+    const tags = await getTags();
+    setStoredTags(tags);
+    setSearchTags(tags);
+    console.log("tag fetch response", tags);
+  };
+
+  const handleSearchTagInputChange = (e) => {
+    const { value } = e.target;
+    setSearchTags(
+      storedTags.filter((storedTag) => storedTag.content.includes(value)),
+    );
+    console.log("search tag input change", value);
+  };
+
+  const handleCreatePost = async (post, author) => {
+    const createResponse = await createPost({
+      ...post,
+      author,
+    });
+    const newPost = await getPostById(createResponse.postId);
+    console.log("new post", newPost);
+
+    fetchPosts();
+    fetchTags();
+  };
+
+  return (
+    <div className="pb-20 pt-14">
+      <div className="flex flex-col justify-center items-center mb-5">
+        <div className="w-full mb-16 flex justify-center">
+          <h1 className="uppercase text-6xl text-black">my blog</h1>
+        </div>
+        <div className="w-[90vw] max-w-md flex justify-center">
+          <Input
+            onChange={handleSearchTagInputChange}
+            type="text"
+            placeholder="태그로 검색하기"
+          />
+        </div>
+        <div className="flex mt-5 justify-center flex-wrap">
+          {searchTags.map((tag) => {
+            return <TagBadge key={tag.id} tag={tag} />;
+          })}
         </div>
       </div>
-    </>
+
+      <div className="mx-auto grid grid-cols-1 gap-y-4 md:grid-cols-2 lg:grid-cols-3 px-10 my-10 lg:w-[950px] md:w-[640px] w-[320px]">
+        {posts.map((post) => {
+          if (
+            post.tags
+              .map((tag) => tag.id)
+              .some((tagId) => searchTags.map((tag) => tag.id).includes(tagId))
+          ) {
+            return (
+              <div
+                key={post.id}
+                className="w-full flex justify-center items-center"
+              >
+                <SmallPost
+                  post={post}
+                  onClick={() => {
+                    console.log(post.id);
+                    navigate(`/post/${post.id}`);
+                  }}
+                />
+              </div>
+            );
+          }
+        })}
+      </div>
+      {isLoggedIn ? (
+        <PostDialog
+          handleCreatePost={handleCreatePost}
+          author={username}
+        ></PostDialog>
+      ) : null}
+    </div>
   );
 }

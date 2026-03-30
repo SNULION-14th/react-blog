@@ -2,10 +2,11 @@ import lion from "@/assets/lion.jpeg";
 import { useMediaQuery } from "@/shared/hooks";
 import { Button } from "@/shared/components";
 import { Link } from "react-router-dom";
+import { useUser } from "../context";
 
 export const Header = () => {
   const isMobile = useMediaQuery("(max-width: 640px)");
-  // 로그인 여부 상태, 우선 false로 초기화
+  const { isLoggedIn, logOut } = useUser();
 
   return (
     <div
@@ -17,7 +18,7 @@ export const Header = () => {
           <div className="text-xl">SNULION BLOG</div>
         </div>
       </Link>
-      {isMobile ? null : (
+      {isMobile ? null : !isLoggedIn ? (
         <div className="flex flex-row gap-5">
           <Link to="/signin">
             <Button>sign in</Button>
@@ -26,6 +27,8 @@ export const Header = () => {
             <Button>sign up</Button>
           </Link>
         </div>
+      ) : (
+        <Button onClick={logOut}>로그아웃</Button>
       )}
     </div>
   );
