@@ -10,6 +10,8 @@ export const UserProvider = ({ children }) => {
     return stored ? JSON.parse(stored) : null;
   });
 
+  const isLoggedIn = !!user;
+
   const login = (userData) => {
     setUser(userData);
     localStorage.setItem("user", JSON.stringify(userData));
@@ -21,7 +23,7 @@ export const UserProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ user, login, logout }}>
+    <UserContext.Provider value={{ user, login, isLoggedIn, logout }}>
       {children}
     </UserContext.Provider>
   );

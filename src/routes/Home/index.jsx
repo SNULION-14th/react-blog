@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import { useUser } from "@/shared/context";
 import { posts as dummyposts } from "/Users/yerimryu/Desktop/week4/react-blog/server/data/posts.js";
 import { tags } from "/Users/yerimryu/Desktop/week4/react-blog/server/data/tags.js";
+import { Button } from "@/shared/components";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -64,7 +65,6 @@ export default function Home() {
           })}
         </div>
       </div>
-
       <div className="mx-auto grid grid-cols-1 gap-y-4 md:grid-cols-2 lg:grid-cols-3 px-10 mt-10 lg:w-[950px] md:w-[640px] w-[320px]">
         {dummyposts.map((post) => (
           <div
@@ -81,7 +81,9 @@ export default function Home() {
           </div>
         ))}
       </div>
-      {isLoggedIn && <Button onClick={handleCreatePost}>게시글 작성</Button>}
+      <div className="mt-10 items-center">
+        {isLoggedIn && <Button onClick={handleCreatePost}>작성</Button>}
+      </div>
     </div>
   );
 }

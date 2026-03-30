@@ -6,8 +6,7 @@ import { useUser } from "@/shared/context";
 
 export const Header = () => {
   const isMobile = useMediaQuery("(max-width: 640px)");
-  const { user, logout } = useUser();
-  const isLoggedIn = !!user;
+  const { user, logout, isLoggedIn } = useUser();
 
   return (
     <div
