@@ -3,23 +3,32 @@ import { Input, TagBadge, PostDialog } from "@/shared/components";
 import { getPosts, getTags, getPostById } from "@/shared/api";
 import { createPost } from "./api";
 import { useNavigate } from "react-router";
-
-//HINT: State
-const posts = [];
-const searchTags = [];
-const storedTags = [];
+import { createContext, useContext } from "react";
+import { useState, useEffect } from "react";
+import { useUser } from "@/shared/context";
+import { posts as dummyposts } from "/Users/yerimryu/Desktop/week4/react-blog/server/data/posts.js";
+import { tags } from "/Users/yerimryu/Desktop/week4/react-blog/server/data/tags.js";
 
 export default function Home() {
   const navigate = useNavigate();
+  const { user, isLoggedIn } = useUser();
+  const [posts, setPosts] = useState();
+  const [searchTags, setSearchTags] = useState([]);
 
+  useEffect(() => {
+    fetchPosts();
+    fetchTags();
+  }, []);
   const fetchPosts = async () => {
     const posts = await getPosts();
     console.log("post fetch response", posts);
+    setPosts(posts);
   };
 
   const fetchTags = async () => {
     const tags = await getTags();
     console.log("tag fetch response", tags);
+    setSearchTags(tags);
   };
 
   const handleSearchTagInputChange = (e) => {
@@ -29,11 +38,13 @@ export default function Home() {
 
   const handleCreatePost = async (post, author) => {
     const createResponse = await createPost({
+      id: posts.length + 1,
       ...post,
       author,
     });
     const newPost = await getPostById(createResponse.postId);
     console.log("new post", newPost);
+    setPosts([newPost, ...posts]);
   };
 
   // TODO: 로그인한 사용자 정보를 가져와서 PostDialog에 전달하고, 게시글 작성 버튼 추가
@@ -55,7 +66,7 @@ export default function Home() {
       </div>
 
       <div className="mx-auto grid grid-cols-1 gap-y-4 md:grid-cols-2 lg:grid-cols-3 px-10 mt-10 lg:w-[950px] md:w-[640px] w-[320px]">
-        {posts.map((post) => (
+        {dummyposts.map((post) => (
           <div
             key={post.id}
             className="w-full flex justify-center items-center"
@@ -70,8 +81,7 @@ export default function Home() {
           </div>
         ))}
       </div>
-      {/* TODO: 로그인한 사용자만 게시글 작성 버튼 표시 */}
-      {/* TODO: PostDialog 컴포넌트 구현 */}
+      {isLoggedIn && <Button onClick={handleCreatePost}>게시글 작성</Button>}
     </div>
   );
 }

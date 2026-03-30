@@ -4,6 +4,7 @@ import Home from "./routes/Home";
 import { Header } from "@/shared/components";
 import Signin from "./routes/SignIn";
 import Signup from "./routes/SignUp";
+import { UserProvider } from "./shared/context";
 
 // import PostPage from "./routes/Post";
 function AppContent() {
@@ -15,13 +16,15 @@ function AppContent() {
 
   return (
     <>
-      {shouldShowHeader && <Header />}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/signin" element={<Signin />} />
-        <Route path="/signup" element={<Signup />} />
-        {/* <Route path="/post/:postId" element={<PostPage />} /> */}
-      </Routes>
+      <UserProvider>
+        {shouldShowHeader && <Header />}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/signin" element={<Signin />} />
+          <Route path="/signup" element={<Signup />} />
+          {/* <Route path="/post/:postId" element={<PostPage />} /> */}
+        </Routes>
+      </UserProvider>
     </>
   );
 }

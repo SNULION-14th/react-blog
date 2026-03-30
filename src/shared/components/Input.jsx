@@ -5,7 +5,7 @@ export const Input = ({ className, ...props }) => {
     <InputComponent
       className={cn(
         "focus-visible:ring-amber-500 focus-visible:ring-2 focus-visible:ring-offset-transparent selection:bg-amber-300 selection:text-black",
-        className
+        className,
       )}
       {...props}
     />

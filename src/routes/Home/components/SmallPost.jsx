@@ -7,9 +7,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { TagBadge } from "@/shared/components";
+import {tags as tag} from "/Users/yerimryu/Desktop/week4/react-blog/server/data/tags.js"
 export const SmallPost = ({ post }) => {
   return (
-    <Card className="h-full w-64 relative block group ring-3 ring-transparent border-2 border-box hover:bg-stone-100  hover:border-transparent hover:ring-stone-300 rounded-xl font-medium hover:bg-stone-100 hover:shadow-2xl hover:shadow-gray-300 hover:-translate-y-2 transition-transform duration-500 cursor-pointer">
+    <Card className="h-full w-64 relative block group ring-3 ring-transparent border-2 border-box   hover:border-transparent hover:ring-stone-300 rounded-xl font-medium hover:bg-stone-100 hover:shadow-2xl hover:shadow-gray-300 hover:-translate-y-2 transition-transform duration-500 cursor-pointer">
       <CardHeader>
         <CardTitle className="text-2xl font-bold text-start">
           {post.title}
@@ -23,7 +24,10 @@ export const SmallPost = ({ post }) => {
           <span>{post.content}</span>
         </div>
         <div className="flex flex-wrap mt-5">
-          {post.tags.map((tag) => tag && <TagBadge key={tag.id} tag={tag} />)}
+          {post.tags.map((tagId) => 
+          {const tagName = tag.find((t) => t.id === tagId);
+              return tagName && <TagBadge key={tagName.id} tag={tagName}/>;
+})}
         </div>
       </CardContent>
       <CardFooter>
