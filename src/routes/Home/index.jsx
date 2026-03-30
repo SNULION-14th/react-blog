@@ -1,29 +1,48 @@
 import { SmallPost } from "./components/SmallPost";
-import { Input, TagBadge, PostDialog } from "@/shared/components";
+import { Input, TagBadge, PostDialog, Button } from "@/shared/components";
 import { getPosts, getTags, getPostById } from "@/shared/api";
 import { createPost } from "./api";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-
-//HINT: State
-const posts = [];
-const searchTags = [];
-const storedTags = [];
+import { useLogIn } from "@/contexts/LogInContext";
 
 export default function Home() {
   const navigate = useNavigate();
+  const { isLoggedIn, userid, username, logIn, logOut } = useLogIn();
+
+  const [posts, setPosts] = useState([]);
+  const [storedTags, setStoredTags] = useState([]);
+  const [searchTags, setSearchTags] = useState([]);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      fetchPosts();
+      fetchTags();
+    } else {
+      setPosts([]);
+      setStoredTags([]);
+      setSearchTags([]);
+    }
+  }, [isLoggedIn]); // TODO: 나중에 post 게시되었을 때도 갱신되게
 
   const fetchPosts = async () => {
     const posts = await getPosts();
+    setPosts(posts);
     console.log("post fetch response", posts);
   };
 
   const fetchTags = async () => {
     const tags = await getTags();
+    setStoredTags(tags);
+    setSearchTags(tags);
     console.log("tag fetch response", tags);
   };
 
   const handleSearchTagInputChange = (e) => {
     const { value } = e.target;
+    setSearchTags(
+      storedTags.filter((storedTag) => storedTag.content.includes(value)),
+    );
     console.log("search tag input change", value);
   };
 
@@ -45,7 +64,11 @@ export default function Home() {
           <h1 className="uppercase text-6xl text-black">my blog</h1>
         </div>
         <div className="w-[90vw] max-w-md flex justify-center">
-          <Input type="text" placeholder="태그로 검색하기" />
+          <Input
+            onChange={handleSearchTagInputChange}
+            type="text"
+            placeholder="태그로 검색하기"
+          />
         </div>
         <div className="flex mt-5 justify-center flex-wrap">
           {searchTags.map((tag) => {
@@ -55,22 +78,31 @@ export default function Home() {
       </div>
 
       <div className="mx-auto grid grid-cols-1 gap-y-4 md:grid-cols-2 lg:grid-cols-3 px-10 mt-10 lg:w-[950px] md:w-[640px] w-[320px]">
-        {posts.map((post) => (
-          <div
-            key={post.id}
-            className="w-full flex justify-center items-center"
-          >
-            <SmallPost
-              post={post}
-              onClick={() => {
-                console.log(post.id);
-                navigate(`/post/${post.id}`);
-              }}
-            />
-          </div>
-        ))}
+        {posts.map((post) => {
+          if (
+            post.tags
+              .map((tag) => tag.id)
+              .some((tagId) => searchTags.map((tag) => tag.id).includes(tagId))
+          ) {
+            return (
+              <div
+                key={post.id}
+                className="w-full flex justify-center items-center"
+              >
+                <SmallPost
+                  post={post}
+                  onClick={() => {
+                    console.log(post.id);
+                    navigate(`/post/${post.id}`);
+                  }}
+                />
+              </div>
+            );
+          }
+        })}
       </div>
       {/* TODO: 로그인한 사용자만 게시글 작성 버튼 표시 */}
+      {isLoggedIn ? <Button className="mt-8">작성</Button> : null}
       {/* TODO: PostDialog 컴포넌트 구현 */}
     </div>
   );
