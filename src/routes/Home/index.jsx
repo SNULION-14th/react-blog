@@ -15,6 +15,7 @@ export default function Home() {
   const { user, isLoggedIn } = useUser();
   const [posts, setPosts] = useState();
   const [searchTags, setSearchTags] = useState([]);
+  const [isDialogOpen, setisDialogOpen] = useState(false);
 
   useEffect(() => {
     fetchPosts();
@@ -39,7 +40,6 @@ export default function Home() {
 
   const handleCreatePost = async (post, author) => {
     const createResponse = await createPost({
-      id: posts.length + 1,
       ...post,
       author,
     });
@@ -82,8 +82,17 @@ export default function Home() {
         ))}
       </div>
       <div className="mt-10 items-center">
-        {isLoggedIn && <Button onClick={handleCreatePost}>작성</Button>}
+        {isLoggedIn && (
+          <Button onClick={() => setisDialogOpen(true)}>작성</Button>
+        )}
       </div>
+      {isDialogOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/5">
+          <div className="bg-white p-8 rounded-2xl shadow-2xl w-[90vw] max-w-md flex flex-col gap-4">
+            <PostDialog author={user} onSubmit={handleCreatePost}></PostDialog>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
