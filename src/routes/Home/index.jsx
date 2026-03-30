@@ -4,11 +4,11 @@ import { getPosts, getTags, getPostById } from "@/shared/api";
 import { createPost } from "./api";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import { useLogIn } from "@/contexts/LogInContext";
+import { useUser } from "@/shared/context";
 
 export default function Home() {
   const navigate = useNavigate();
-  const { isLoggedIn, userid, username, logIn, logOut } = useLogIn();
+  const { isLoggedIn, userid, username, logIn, logOut } = useUser();
 
   const [posts, setPosts] = useState([]);
   const [storedTags, setStoredTags] = useState([]);

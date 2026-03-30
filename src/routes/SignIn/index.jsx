@@ -9,11 +9,11 @@ import {
 import { Input, Button } from "@/shared/components";
 import logo from "@/assets/logo.png";
 import { useNavigate } from "react-router";
-import { useLogIn } from "@/contexts/LogInContext";
+import { useUser } from "@/shared/context";
 
 export default function SignIn() {
   const navigate = useNavigate();
-  const { logIn } = useLogIn();
+  const { logIn } = useUser();
 
   const handleSignIn = async (e) => {
     e.preventDefault();
