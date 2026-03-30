@@ -4,11 +4,9 @@ import { Button } from "@/shared/components";
 import { Link } from "react-router-dom";
 import { useUser } from "../context";
 
-//TODO: 로그인 상태에 따라 버튼을 바꾸고, 로그아웃 기능 추가
 export const Header = () => {
   const isMobile = useMediaQuery("(max-width: 640px)");
   const { isLoggedIn, logOut } = useUser();
-  // 로그인 상태에 따라 버튼을 바꾸고, 로그아웃 기능 추가
 
   return (
     <div

@@ -23,7 +23,7 @@ export default function Home() {
       setStoredTags([]);
       setSearchTags([]);
     }
-  }, [isLoggedIn]); // TODO: 나중에 post 게시되었을 때도 갱신되게
+  }, [isLoggedIn]);
 
   const fetchPosts = async () => {
     const posts = await getPosts();
@@ -57,8 +57,6 @@ export default function Home() {
     fetchPosts();
     fetchTags();
   };
-
-  // TODO: 로그인한 사용자 정보를 가져와서 PostDialog에 전달하고, 게시글 작성 버튼 추가
 
   return (
     <div className="pb-20 pt-14">
@@ -104,14 +102,12 @@ export default function Home() {
           }
         })}
       </div>
-      {/* TODO: 로그인한 사용자만 게시글 작성 버튼 표시 */}
       {isLoggedIn ? (
         <PostDialog
           handleCreatePost={handleCreatePost}
           author={username}
         ></PostDialog>
       ) : null}
-      {/* TODO: PostDialog 컴포넌트 구현 */}
     </div>
   );
 }

@@ -1,4 +1,3 @@
-//TODO: 사용자 로그인 상태 관리 구현
 import { createContext, useState, useContext } from "react";
 
 const DEFAULT_USER = {
