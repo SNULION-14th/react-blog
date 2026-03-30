@@ -1,21 +1,17 @@
 import { SmallPost } from "./components/SmallPost";
-import { Input, TagBadge, PostDialog } from "@/shared/components";
+import { Input, TagBadge, PostDialog, Button } from "@/shared/components";
 import { getPosts, getTags, getPostById } from "@/shared/api";
 import { createPost } from "./api";
 import { useNavigate } from "react-router";
-import { createContext, useContext } from "react";
 import { useState, useEffect } from "react";
 import { useUser } from "@/shared/context";
-import { posts as dummyposts } from "/Users/yerimryu/Desktop/week4/react-blog/server/data/posts.js";
-import { tags } from "/Users/yerimryu/Desktop/week4/react-blog/server/data/tags.js";
-import { Button } from "@/shared/components";
 
 export default function Home() {
   const navigate = useNavigate();
   const { user, isLoggedIn } = useUser();
   const [posts, setPosts] = useState();
   const [searchTags, setSearchTags] = useState([]);
-  const [isDialogOpen, setisDialogOpen] = useState(false);
+  const [tagSearchTerm, setTagSearchTerm] = useState("");
 
   useEffect(() => {
     fetchPosts();
@@ -36,6 +32,7 @@ export default function Home() {
   const handleSearchTagInputChange = (e) => {
     const { value } = e.target;
     console.log("search tag input change", value);
+    setTagSearchTerm(e.target.value);
   };
 
   const handleCreatePost = async (post, author) => {
@@ -45,9 +42,12 @@ export default function Home() {
     });
     const newPost = await getPostById(createResponse.postId);
     console.log("new post", newPost);
-    setPosts([newPost, ...posts]);
+    setPosts((prev) => [...prev, newPost]);
   };
 
+  const filteredTags = searchTags.filter((tag) =>
+    tag.content?.toLowerCase().includes(tagSearchTerm.toLowerCase()),
+  );
   // TODO: 로그인한 사용자 정보를 가져와서 PostDialog에 전달하고, 게시글 작성 버튼 추가
 
   return (
@@ -57,41 +57,38 @@ export default function Home() {
           <h1 className="uppercase text-6xl text-black">my blog</h1>
         </div>
         <div className="w-[90vw] max-w-md flex justify-center">
-          <Input type="text" placeholder="태그로 검색하기" />
+          <Input
+            type="text"
+            placeholder="태그로 검색하기"
+            onChange={handleSearchTagInputChange}
+          />
         </div>
         <div className="flex mt-5 justify-center flex-wrap">
-          {searchTags.map((tag) => {
+          {filteredTags.map((tag) => {
             return <TagBadge key={tag.id} tag={tag} />;
           })}
         </div>
       </div>
       <div className="mx-auto grid grid-cols-1 gap-y-4 md:grid-cols-2 lg:grid-cols-3 px-10 mt-10 lg:w-[950px] md:w-[640px] w-[320px]">
-        {dummyposts.map((post) => (
-          <div
-            key={post.id}
-            className="w-full flex justify-center items-center"
-          >
-            <SmallPost
-              post={post}
-              onClick={() => {
-                console.log(post.id);
-                navigate(`/post/${post.id}`);
-              }}
-            />
-          </div>
-        ))}
+        {posts &&
+          posts.map((post) => (
+            <div
+              key={post.id}
+              className="w-full flex justify-center items-center"
+            >
+              <SmallPost
+                post={post}
+                onClick={() => navigate(`/post/${post.id}`)}
+              />
+            </div>
+          ))}
       </div>
-      <div className="mt-10 items-center">
-        {isLoggedIn && (
-          <Button onClick={() => setisDialogOpen(true)}>작성</Button>
-        )}
-      </div>
-      {isDialogOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/5">
-          <div className="bg-white p-8 rounded-2xl shadow-2xl w-[90vw] max-w-md flex flex-col gap-4">
-            <PostDialog author={user} onSubmit={handleCreatePost}></PostDialog>
-          </div>
-        </div>
+      <div className="mt-10 items-center"></div>
+      {isLoggedIn && (
+        <PostDialog
+          handleCreatePost={handleCreatePost}
+          author={user?.username}
+        />
       )}
     </div>
   );
