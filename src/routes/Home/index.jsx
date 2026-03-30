@@ -51,6 +51,14 @@ export default function Home() {
   const filteredTags = searchTags.filter((tag) =>
     tag.content?.toLowerCase().includes(tagSearchTerm.toLowerCase()),
   );
+
+  const filteredPosts = posts.filter(
+    (post) =>
+      !tagSearchTerm ||
+      post.tags?.some((tag) =>
+        tag.content?.toLowerCase().includes(tagSearchTerm.toLowerCase()),
+      ),
+  );
   // TODO: 로그인한 사용자 정보를 가져와서 PostDialog에 전달하고, 게시글 작성 버튼 추가
 
   return (
@@ -73,18 +81,17 @@ export default function Home() {
         </div>
       </div>
       <div className="mx-auto grid grid-cols-1 gap-y-4 md:grid-cols-2 lg:grid-cols-3 px-10 mt-10 lg:w-[950px] md:w-[640px] w-[320px]">
-        {posts &&
-          posts.map((post) => (
-            <div
-              key={post.id}
-              className="w-full flex justify-center items-center"
-            >
-              <SmallPost
-                post={post}
-                onClick={() => navigate(`/post/${post.id}`)}
-              />
-            </div>
-          ))}
+        {filteredPosts.map((post) => (
+          <div
+            key={post.id}
+            className="w-full flex justify-center items-center"
+          >
+            <SmallPost
+              post={post}
+              onClick={() => navigate(`/post/${post.id}`)}
+            />
+          </div>
+        ))}
       </div>
       <div className="mt-10 items-center"></div>
       {isLoggedIn && (
