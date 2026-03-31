@@ -1,12 +1,20 @@
 import lion from "@/assets/lion.jpeg";
 import { useMediaQuery } from "@/shared/hooks";
 import { Button } from "@/shared/components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { userContext } from "@/shared/context/userContext";
+import { createContext, useContext } from "react";
 
 //TODO: 로그인 상태에 따라 버튼을 바꾸고, 로그아웃 기능 추가
 export const Header = () => {
   const isMobile = useMediaQuery("(max-width: 640px)");
   // 로그인 상태에 따라 버튼을 바꾸고, 로그아웃 기능 추가
+  const navigate = useNavigate();
+  const { isLoggedIn, logout, user } = useContext(userContext);
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
     <div
@@ -20,12 +28,20 @@ export const Header = () => {
       </Link>
       {isMobile ? null : (
         <div className="flex flex-row gap-5">
-          <Link to="/signin">
-            <Button>sign in</Button>
-          </Link>
-          <Link to="/signup">
-            <Button>sign up</Button>
-          </Link>
+          {isLoggedIn ? (
+            <>
+              <Button onClick={handleLogout}>sign out</Button>
+            </>
+          ) : (
+            <>
+              <Link to="/signin">
+                <Button>sign in</Button>
+              </Link>
+              <Link to="/signup">
+                <Button variant="secondary">sign up</Button>
+              </Link>
+            </>
+          )}
         </div>
       )}
     </div>
