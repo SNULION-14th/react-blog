@@ -1,5 +1,5 @@
 //TODO: 사용자 로그인 상태 관리 구현
-import {createContext, useState, useContext} from "react";
+import { createContext, useState, useContext } from "react";
 
 const LoggedInContext = createContext();
 
@@ -15,7 +15,9 @@ export const LoggedInProvider = ({ children }) => {
   };
 
   return (
-    <LoggedInContext.Provider value={{ user, isLoggedIn: !!user, login, logout}}>
+    <LoggedInContext.Provider
+      value={{ user, isLoggedIn: !!user, login, logout }}
+    >
       {children}
     </LoggedInContext.Provider>
   );
