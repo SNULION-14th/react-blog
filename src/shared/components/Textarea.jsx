@@ -6,7 +6,7 @@ export const Textarea = ({ ...props }) => {
     <TextareaComponent
       className={cn(
         "resize-none focus-visible:ring-amber-500 focus-visible:ring-2 focus-visible:ring-offset-transparent selection:bg-amber-300 selection:text-black",
-        props.className
+        props.className,
       )}
       {...props}
     />

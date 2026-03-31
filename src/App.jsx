@@ -4,13 +4,12 @@ import Home from "./routes/Home";
 import { Header } from "@/shared/components";
 import Signin from "./routes/SignIn";
 import Signup from "./routes/SignUp";
+// 1. UserProvider 임포트 추가 (경로를 확인하세요!)
+import { UserProvider } from "@/shared/context/userContext";
 
-// import PostPage from "./routes/Post";
 function AppContent() {
   const location = useLocation();
-
   const HIDE_HEADER_PATHS = ["/signin", "/signup"];
-
   const shouldShowHeader = !HIDE_HEADER_PATHS.includes(location.pathname);
 
   return (
@@ -20,7 +19,6 @@ function AppContent() {
         <Route path="/" element={<Home />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
-        {/* <Route path="/post/:postId" element={<PostPage />} /> */}
       </Routes>
     </>
   );
@@ -28,9 +26,12 @@ function AppContent() {
 
 function App() {
   return (
-    <BrowserRouter>
-      <AppContent />
-    </BrowserRouter>
+    // 2. UserProvider로 AppContent 전체를 감싸줍니다.
+    <UserProvider>
+      <BrowserRouter>
+        <AppContent />
+      </BrowserRouter>
+    </UserProvider>
   );
 }
 

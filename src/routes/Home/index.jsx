@@ -1,56 +1,90 @@
+import { useState, useEffect, useContext } from "react";
 import { SmallPost } from "./components/SmallPost";
 import { Input, TagBadge, PostDialog } from "@/shared/components";
 import { getPosts, getTags, getPostById } from "@/shared/api";
 import { createPost } from "./api";
 import { useNavigate } from "react-router";
-
-//HINT: State
-const posts = [];
-const searchTags = [];
-const storedTags = [];
+import { UserContext } from "@/shared/context/userContext";
 
 export default function Home() {
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
 
-  const fetchPosts = async () => {
-    const posts = await getPosts();
-    console.log("post fetch response", posts);
-  };
+  const [posts, setPosts] = useState([]);
+  const [storedTags, setStoredTags] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const fetchTags = async () => {
-    const tags = await getTags();
-    console.log("tag fetch response", tags);
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      const fetchedPosts = await getPosts();
+      const fetchedTags = await getTags();
+      setPosts(fetchedPosts || []);
+      setStoredTags(fetchedTags || []);
+    };
+    fetchData();
+  }, []);
+
+  const displayTags =
+    searchQuery.trim() === ""
+      ? storedTags
+      : storedTags.filter((tag) =>
+          tag?.content?.toLowerCase().includes(searchQuery.toLowerCase()),
+        );
 
   const handleSearchTagInputChange = (e) => {
-    const { value } = e.target;
-    console.log("search tag input change", value);
+    setSearchQuery(e.target.value);
   };
 
-  const handleCreatePost = async (post, author) => {
-    const createResponse = await createPost({
-      ...post,
-      author,
-    });
-    const newPost = await getPostById(createResponse.postId);
-    console.log("new post", newPost);
-  };
+  const handleCreatePost = async (postData) => {
+    try {
+      const createResponse = await createPost({
+        ...postData,
+        author: user.username,
+      });
 
-  // TODO: 로그인한 사용자 정보를 가져와서 PostDialog에 전달하고, 게시글 작성 버튼 추가
+      const newPost = await getPostById(createResponse.postId);
+
+      setPosts((prev) => [...prev, newPost]);
+      if (postData.tags && postData.tags.length > 0) {
+        setStoredTags((prevTags) => {
+          // 중복 체크
+          const existingTagContents = prevTags.map((t) => t.content);
+
+          const newTagsFromPost = postData.tags
+            .filter((tagContent) => !existingTagContents.includes(tagContent))
+            .map((tagContent, index) => ({
+              id: `new-${Date.now()}-${index}`,
+              content: tagContent,
+            }));
+
+          return [...prevTags, ...newTagsFromPost];
+        });
+      }
+    } catch (error) {
+      console.error("게시글 작성 중 오류 발생:", error);
+    }
+  };
 
   return (
-    <div className="pb-20 pt-14">
-      <div className="flex flex-col justify-center items-center mb-5">
+    <div className="pb-20 pt-14 flex flex-col items-center">
+      <div className="flex flex-col justify-center items-center mb-5 w-full">
         <div className="w-full mb-16 flex justify-center">
-          <h1 className="uppercase text-6xl text-black">my blog</h1>
+          <h1 className="uppercase text-6xl text-black font-bold">my blog</h1>
         </div>
+
         <div className="w-[90vw] max-w-md flex justify-center">
-          <Input type="text" placeholder="태그로 검색하기" />
+          <Input
+            type="text"
+            placeholder="태그로 검색하기"
+            value={searchQuery}
+            onChange={handleSearchTagInputChange}
+          />
         </div>
-        <div className="flex mt-5 justify-center flex-wrap">
-          {searchTags.map((tag) => {
-            return <TagBadge key={tag.id} tag={tag} />;
-          })}
+
+        <div className="flex mt-5 justify-center flex-wrap gap-2 px-10 min-h-[40px] max-w-4xl">
+          {displayTags.map((tag) => (
+            <TagBadge key={tag.id} tag={{ ...tag, name: tag.content }} />
+          ))}
         </div>
       </div>
 
@@ -63,15 +97,18 @@ export default function Home() {
             <SmallPost
               post={post}
               onClick={() => {
-                console.log(post.id);
                 navigate(`/post/${post.id}`);
               }}
             />
           </div>
         ))}
       </div>
-      {/* TODO: 로그인한 사용자만 게시글 작성 버튼 표시 */}
-      {/* TODO: PostDialog 컴포넌트 구현 */}
+
+      {user && (
+        <div className="mt-16 mb-10 flex justify-center w-full">
+          <PostDialog onCreate={handleCreatePost} />
+        </div>
+      )}
     </div>
   );
 }
