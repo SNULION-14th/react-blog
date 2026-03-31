@@ -2,11 +2,13 @@ import lion from "@/assets/lion.jpeg";
 import { useMediaQuery } from "@/shared/hooks";
 import { Button } from "@/shared/components";
 import { Link } from "react-router-dom";
+import { useLoggedIn } from "../context"
 
 //TODO: 로그인 상태에 따라 버튼을 바꾸고, 로그아웃 기능 추가
 export const Header = () => {
   const isMobile = useMediaQuery("(max-width: 640px)");
   // 로그인 상태에 따라 버튼을 바꾸고, 로그아웃 기능 추가
+  const { isLoggedIn } = useLoggedIn();
 
   return (
     <div
