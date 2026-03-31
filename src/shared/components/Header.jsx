@@ -28,7 +28,7 @@ export const Header = () => {
         <div className="flex flex-row gap-5">
           {user ? (
             <>
-              <span>{user.name}님</span>
+              <span>{user.username}님</span>
               <Button onClick={handleLogout}>logout</Button>
             </>
           ) : (
