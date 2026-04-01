@@ -2,17 +2,23 @@ import lion from "@/assets/lion.jpeg";
 import { useMediaQuery } from "@/shared/hooks";
 import { Button } from "@/shared/components";
 import { Link } from "react-router-dom";
+<<<<<<< HEAD
 import { useUser } from "@/shared/context/userContext";
+=======
+>>>>>>> 8bd667ae521a4b890bfdc16c768f0f1e683d7f2a
 
 //TODO: 로그인 상태에 따라 버튼을 바꾸고, 로그아웃 기능 추가
 export const Header = () => {
   const isMobile = useMediaQuery("(max-width: 640px)");
   // 로그인 상태에 따라 버튼을 바꾸고, 로그아웃 기능 추가
+<<<<<<< HEAD
   const { user, toggleUser } = useUser();
 
   const handleLogout = () => {
     toggleUser(null); // 로그아웃 시 사용자 정보를 null로 설정
   };
+=======
+>>>>>>> 8bd667ae521a4b890bfdc16c768f0f1e683d7f2a
 
   return (
     <div
@@ -26,6 +32,7 @@ export const Header = () => {
       </Link>
       {isMobile ? null : (
         <div className="flex flex-row gap-5">
+<<<<<<< HEAD
           {user ? (
             <>
               <span>{user.username}님</span>
@@ -41,6 +48,14 @@ export const Header = () => {
               </Link>
             </>
           )}
+=======
+          <Link to="/signin">
+            <Button>sign in</Button>
+          </Link>
+          <Link to="/signup">
+            <Button>sign up</Button>
+          </Link>
+>>>>>>> 8bd667ae521a4b890bfdc16c768f0f1e683d7f2a
         </div>
       )}
     </div>

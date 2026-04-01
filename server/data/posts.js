@@ -3,7 +3,11 @@ export const posts = [
   {
     id: 1,
     title: "#1 Post",
+<<<<<<< HEAD
     content: "첫번째 게시물입니다",
+=======
+    content: "체번째 게시물입니다",
+>>>>>>> 8bd667ae521a4b890bfdc16c768f0f1e683d7f2a
     author: 1,
     tags: [1, 2, 3],
     like_users: [1, 2],

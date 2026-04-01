@@ -1,4 +1,5 @@
 //TODO: 사용자 로그인 상태 관리 구현
+<<<<<<< HEAD
 import { createContext, useState, useContext } from "react";
 
 const UserContext = createContext();
@@ -25,3 +26,5 @@ export const useUser = () => {
   }
   return context;
 };
+=======
+>>>>>>> 8bd667ae521a4b890bfdc16c768f0f1e683d7f2a
