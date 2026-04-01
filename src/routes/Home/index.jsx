@@ -22,27 +22,26 @@ export default function Home() {
 
   const fetchTags = async () => {
     const fetchedTags = await getTags();
-    setStoredTags(fetchedTags); 
-  };
+    setStoredTags(fetchedTags);
+    setSearchTags(fetchedTags); 
 
+  const handleSearchTagInputChange = (e) => {
+    const { value } = e.target;
+    setSearchInput(value);
+    
+    if (value.trim() === "") {
+      setSearchTags(storedTags); 
+    } else {
+      const filtered = storedTags.filter((tag) => tag.content.includes(value));
+      setSearchTags(filtered);
+    }
+  };
 
   useEffect(() => {
     fetchPosts();
     fetchTags();
   }, []);
 
-  const handleSearchTagInputChange = (e) => {
-    const { value } = e.target;
-    setSearchInput(value); 
-    
-
-    if (value.trim() === "") {
-      setSearchTags([]);
-    } else {
-      const filtered = storedTags.filter((tag) => tag.content.includes(value));
-      setSearchTags(filtered);
-    }
-  };
 
   const handleCreatePost = async (postData) => {
     const createResponse = await createPost({
