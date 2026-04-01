@@ -78,7 +78,7 @@ export const PostDialog = ({ onCreate }) => {
     <>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline">작성</Button>
+          <Button>작성</Button>
         </DialogTrigger>
         <DialogContent>
           <form onSubmit={handleSubmit}>
