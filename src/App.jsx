@@ -4,6 +4,7 @@ import Home from "./routes/Home";
 import { Header } from "@/shared/components";
 import Signin from "./routes/SignIn";
 import Signup from "./routes/SignUp";
+import { UserProvider } from "@/shared/context";
 
 // import PostPage from "./routes/Post";
 function AppContent() {
@@ -29,7 +30,9 @@ function AppContent() {
 function App() {
   return (
     <BrowserRouter>
-      <AppContent />
+      <UserProvider>
+        <AppContent />
+      </UserProvider>
     </BrowserRouter>
   );
 }

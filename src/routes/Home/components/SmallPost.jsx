@@ -15,7 +15,7 @@ export const SmallPost = ({ post }) => {
           {post.title}
         </CardTitle>
         <CardDescription className="text-sm text-start">
-          {post.author.username}
+          {post.authorName}
         </CardDescription>
       </CardHeader>
       <CardContent>

@@ -3,40 +3,56 @@ import { Input, TagBadge, PostDialog } from "@/shared/components";
 import { getPosts, getTags, getPostById } from "@/shared/api";
 import { createPost } from "./api";
 import { useNavigate } from "react-router";
-
-//HINT: State
-const posts = [];
-const searchTags = [];
-const storedTags = [];
+import { useState, useEffect } from "react";
+import { useUser } from "@/shared/context";
 
 export default function Home() {
   const navigate = useNavigate();
+  const { user } = useUser();
+
+  //HINT: State
+  const [posts, setPosts] = useState([]);
+  const [storedTags, setStoredTags] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const fetchPosts = async () => {
     const posts = await getPosts();
     console.log("post fetch response", posts);
+    setPosts(posts);
   };
 
   const fetchTags = async () => {
     const tags = await getTags();
     console.log("tag fetch response", tags);
+    setStoredTags(tags);
   };
+
+  useEffect(() => {
+    fetchPosts();
+    fetchTags();
+  }, []);
+
+  const searchTags = searchQuery
+    ? storedTags.filter((tag) =>
+        tag.content.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : storedTags;
 
   const handleSearchTagInputChange = (e) => {
     const { value } = e.target;
     console.log("search tag input change", value);
+    setSearchQuery(value);
   };
 
-  const handleCreatePost = async (post, author) => {
+  const handleCreatePost = async (post) => {
     const createResponse = await createPost({
       ...post,
-      author,
+      author: user?.username,
     });
     const newPost = await getPostById(createResponse.postId);
     console.log("new post", newPost);
+    setPosts((prev) => [newPost, ...prev]);
   };
-
-  // TODO: 로그인한 사용자 정보를 가져와서 PostDialog에 전달하고, 게시글 작성 버튼 추가
 
   return (
     <div className="pb-20 pt-14">
@@ -45,7 +61,12 @@ export default function Home() {
           <h1 className="uppercase text-6xl text-black">my blog</h1>
         </div>
         <div className="w-[90vw] max-w-md flex justify-center">
-          <Input type="text" placeholder="태그로 검색하기" />
+          <Input
+            type="text"
+            placeholder="태그로 검색하기"
+            value={searchQuery}
+            onChange={handleSearchTagInputChange}
+          />
         </div>
         <div className="flex mt-5 justify-center flex-wrap">
           {searchTags.map((tag) => {
@@ -70,8 +91,11 @@ export default function Home() {
           </div>
         ))}
       </div>
-      {/* TODO: 로그인한 사용자만 게시글 작성 버튼 표시 */}
-      {/* TODO: PostDialog 컴포넌트 구현 */}
+      {user && (
+        <div className="flex justify-center mt-10">
+          <PostDialog onCreatePost={handleCreatePost} />
+        </div>
+      )}
     </div>
   );
 }
