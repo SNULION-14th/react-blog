@@ -3,13 +3,15 @@ import { Input, TagBadge, PostDialog } from "@/shared/components";
 import { getPosts, getTags, getPostById } from "@/shared/api";
 import { createPost } from "./api";
 import { useNavigate } from "react-router";
-
-//HINT: State
-const posts = [];
-const searchTags = [];
-const storedTags = [];
+import { useUser } from "@/shared/context";
+import { useState, useEffect } from "react";
 
 export default function Home() {
+  const [posts, setPosts] = useState([]);
+  const [searchTags, setSearchTags] = useState([]);
+  const [storedTags, setStoredTags] = useState([]);
+
+  const { isLoggedIn } = useUser();
   const navigate = useNavigate();
 
   const fetchPosts = async () => {
@@ -37,7 +39,6 @@ export default function Home() {
   };
 
   // TODO: 로그인한 사용자 정보를 가져와서 PostDialog에 전달하고, 게시글 작성 버튼 추가
-
   return (
     <div className="pb-20 pt-14">
       <div className="flex flex-col justify-center items-center mb-5">
@@ -70,8 +71,11 @@ export default function Home() {
           </div>
         ))}
       </div>
-      {/* TODO: 로그인한 사용자만 게시글 작성 버튼 표시 */}
-      {/* TODO: PostDialog 컴포넌트 구현 */}
+      {isLoggedIn ? (
+        <PostDialog onCreate={handleCreatePost}></PostDialog>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }
