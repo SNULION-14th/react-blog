@@ -11,7 +11,7 @@ Style: Tailwindcss + Shadcnui
 
 ```
 git clone https://github.com/SNULION-13th/react-likelion-blog.git
-cd react-likelion-blog
+
 npm install
 ```
 
