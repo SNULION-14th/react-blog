@@ -24,6 +24,7 @@ export default function Home() {
     const fetchedTags = await getTags();
     setStoredTags(fetchedTags);
     setSearchTags(fetchedTags); 
+  };
 
   const handleSearchTagInputChange = (e) => {
     const { value } = e.target;
@@ -41,6 +42,7 @@ export default function Home() {
     fetchPosts();
     fetchTags();
   }, []);
+
 
 
   const handleCreatePost = async (postData) => {
