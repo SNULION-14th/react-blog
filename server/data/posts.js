@@ -1,0 +1,57 @@
+// dummy data
+export const posts = [
+  {
+    id: 1,
+    title: "#1 Post",
+<<<<<<< HEAD
+    content: "첫번째 게시물입니다",
+=======
+    content: "체번째 게시물입니다",
+>>>>>>> 8bd667ae521a4b890bfdc16c768f0f1e683d7f2a
+    author: 1,
+    tags: [1, 2, 3],
+    like_users: [1, 2],
+    created_at: "2024-02-04T07:42:50.658501Z",
+    comments: [1, 2, 3],
+  },
+  {
+    id: 2,
+    title: "#2 post",
+    content: "두번째 게시물입니다",
+    author: 2,
+    tags: [1, 4],
+    like_users: [4],
+    created_at: "2024-02-04T07:42:50.658501Z",
+    comments: [],
+  },
+  {
+    id: 3,
+    title: "#3 post",
+    content: "세번째 게시물입니다",
+    author: 3,
+    tags: [5, 6],
+    like_users: [],
+    created_at: "2024-02-04T07:42:50.658501Z",
+    comments: [],
+  },
+  {
+    id: 4,
+    title: "#4 post",
+    content: "네번째 게시물입니다",
+    author: 4,
+    tags: [7, 8],
+    like_users: [0, 1, 2],
+    created_at: "2024-02-04T07:42:50.658501Z",
+    comments: [],
+  },
+  {
+    id: 5,
+    title: "#5 post",
+    content: "다섯번째 게시물입니다",
+    author: 5,
+    tags: [1, 9],
+    like_users: [3],
+    created_at: "2024-02-04T07:42:50.658501Z",
+    comments: [],
+  },
+];
