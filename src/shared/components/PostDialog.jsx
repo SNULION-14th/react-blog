@@ -16,7 +16,6 @@ export const PostDialog = ({ onCreate }) => {
   const [post, setPost] = useState({
     title: "",
     content: "",
-    author: "",
     tags: [],
   });
   const [tag, setTag] = useState("");
@@ -38,10 +37,12 @@ export const PostDialog = ({ onCreate }) => {
       if (tag.trim()) {
         const newId =
           post.tags.length > 0
-            ? Math.max(...post.tags.map((tag) => tag.id)) + 1
+            ? Math.max(...post.tags.map((t) => t.id)) + 1
             : 0;
         const newTag = { id: newId, content: tag.trim() };
+        console.log(newTag);
         setPost((prev) => ({ ...prev, tags: [...prev.tags, newTag] }));
+        console.log(post);
         setTag("");
       }
     }
@@ -58,15 +59,10 @@ export const PostDialog = ({ onCreate }) => {
     setPost({
       title: "",
       content: "",
-      author: "",
       tags: [],
     });
     setTag("");
   };
-
-  useEffect(() => {
-    setPost((prev) => ({ ...prev, author: username }));
-  }, [username]);
 
   useEffect(() => {
     if (!open) {
