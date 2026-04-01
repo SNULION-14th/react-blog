@@ -1,4 +1,5 @@
 //TODO: 게시글 작성 모달 다이얼로그 구현
+<<<<<<< HEAD
 import { useState } from "react";
 import { useUser } from "@/shared/context/userContext";
 import { Button, Input, TagBadge } from "@/shared/components";
@@ -103,4 +104,8 @@ export const PostDialog = ({ isOpen, onClose }) => {
       </div>
     </div>
   );
+=======
+export const PostDialog = () => {
+  return <div>PostDialog</div>;
+>>>>>>> 8bd667ae521a4b890bfdc16c768f0f1e683d7f2a
 };

@@ -1,4 +1,5 @@
 import { SmallPost } from "./components/SmallPost";
+<<<<<<< HEAD
 import { Input, TagBadge, PostDialog, Button } from "@/shared/components";
 import { getPosts, getTags } from "@/shared/api";
 import { useNavigate } from "react-router";
@@ -122,17 +123,84 @@ export default function Home() {
 
       <div className="mx-auto grid grid-cols-1 gap-y-6 md:grid-cols-2 lg:grid-cols-3 px-10 mt-10 lg:w-[950px] md:w-[640px] w-[320px]">
         {filteredPosts.map((post) => (
+=======
+import { Input, TagBadge, PostDialog } from "@/shared/components";
+import { getPosts, getTags, getPostById } from "@/shared/api";
+import { createPost } from "./api";
+import { useNavigate } from "react-router";
+
+//HINT: State
+const posts = [];
+const searchTags = [];
+const storedTags = [];
+
+export default function Home() {
+  const navigate = useNavigate();
+
+  const fetchPosts = async () => {
+    const posts = await getPosts();
+    console.log("post fetch response", posts);
+  };
+
+  const fetchTags = async () => {
+    const tags = await getTags();
+    console.log("tag fetch response", tags);
+  };
+
+  const handleSearchTagInputChange = (e) => {
+    const { value } = e.target;
+    console.log("search tag input change", value);
+  };
+
+  const handleCreatePost = async (post, author) => {
+    const createResponse = await createPost({
+      ...post,
+      author,
+    });
+    const newPost = await getPostById(createResponse.postId);
+    console.log("new post", newPost);
+  };
+
+  // TODO: 로그인한 사용자 정보를 가져와서 PostDialog에 전달하고, 게시글 작성 버튼 추가
+
+  return (
+    <div className="pb-20 pt-14">
+      <div className="flex flex-col justify-center items-center mb-5">
+        <div className="w-full mb-16 flex justify-center">
+          <h1 className="uppercase text-6xl text-black">my blog</h1>
+        </div>
+        <div className="w-[90vw] max-w-md flex justify-center">
+          <Input type="text" placeholder="태그로 검색하기" />
+        </div>
+        <div className="flex mt-5 justify-center flex-wrap">
+          {searchTags.map((tag) => {
+            return <TagBadge key={tag.id} tag={tag} />;
+          })}
+        </div>
+      </div>
+
+      <div className="mx-auto grid grid-cols-1 gap-y-4 md:grid-cols-2 lg:grid-cols-3 px-10 mt-10 lg:w-[950px] md:w-[640px] w-[320px]">
+        {posts.map((post) => (
+>>>>>>> 8bd667ae521a4b890bfdc16c768f0f1e683d7f2a
           <div
             key={post.id}
             className="w-full flex justify-center items-center"
           >
             <SmallPost
               post={post}
+<<<<<<< HEAD
               onClick={() => navigate(`/post/${post.id}`)}
+=======
+              onClick={() => {
+                console.log(post.id);
+                navigate(`/post/${post.id}`);
+              }}
+>>>>>>> 8bd667ae521a4b890bfdc16c768f0f1e683d7f2a
             />
           </div>
         ))}
       </div>
+<<<<<<< HEAD
 
       {user && (
         <div className="fixed bottom-5 left-1/2 transform -translate-x-1/2 z-10">
@@ -153,6 +221,10 @@ export default function Home() {
           else setIsPostDialogOpen(false);
         }}
       />
+=======
+      {/* TODO: 로그인한 사용자만 게시글 작성 버튼 표시 */}
+      {/* TODO: PostDialog 컴포넌트 구현 */}
+>>>>>>> 8bd667ae521a4b890bfdc16c768f0f1e683d7f2a
     </div>
   );
 }
