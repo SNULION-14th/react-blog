@@ -4,6 +4,7 @@ import Home from "./routes/Home";
 import { Header } from "@/shared/components";
 import Signin from "./routes/SignIn";
 import Signup from "./routes/SignUp";
+import { LoggedInUserProvider } from "@/context/LoggedInUser";
 
 // import PostPage from "./routes/Post";
 function AppContent() {
@@ -29,7 +30,10 @@ function AppContent() {
 function App() {
   return (
     <BrowserRouter>
-      <AppContent />
+      <LoggedInUserProvider>
+        {/* user로 접근할수 있게 감싸주기 */}
+        <AppContent />
+      </LoggedInUserProvider>
     </BrowserRouter>
   );
 }
