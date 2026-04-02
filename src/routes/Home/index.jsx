@@ -40,18 +40,6 @@ export default function Home() {
     setSearchInput(value);
   };
 
-  // const handleCreatePost = async (post, author) => {
-  //   const createResponse = await createPost({
-  //     ...post,
-  //     author,
-  //   });
-
-  //   const newPost = await getPostById(createResponse.postId);
-  //   console.log("new post", newPost);
-
-  //   setPosts((prev) => [newPost, ...prev]);
-  // };
-
   const handleCreatePost = async (postData) => {
     if (!user) return;
 
