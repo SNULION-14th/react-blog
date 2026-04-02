@@ -9,9 +9,11 @@ import {
 import { Input, Button } from "@/shared/components";
 import logo from "@/assets/logo.png";
 import { useNavigate } from "react-router";
+import { useAuth } from "@/shared/context/userContext";
 
 export default function SignIn() {
   const navigate = useNavigate();
+  const { setUser } = useAuth();
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -19,13 +21,14 @@ export default function SignIn() {
 
     try {
       const user = await signIn(username.value, password.value);
-      console.log(user);
-      //TODO: 로그인한 사용자 정보를 ContextAPI로 저장하고, 홈으로 이동
+      console.log("login response:", user);
+      setUser(user);
       navigate("/");
     } catch (error) {
       console.error(error);
     }
   };
+
   return (
     <div className="w-screen h-screen fixed top-0 left-0 flex items-center justify-center">
       <form onSubmit={handleSignIn}>
