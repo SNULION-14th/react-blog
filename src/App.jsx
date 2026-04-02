@@ -4,8 +4,9 @@ import Home from "./routes/Home";
 import { Header } from "@/shared/components";
 import Signin from "./routes/SignIn";
 import Signup from "./routes/SignUp";
-
+import { LoginProvider } from "@/shared/context/userContext";
 // import PostPage from "./routes/Post";
+
 function AppContent() {
   const location = useLocation();
 
@@ -15,22 +16,26 @@ function AppContent() {
 
   return (
     <>
-      {shouldShowHeader && <Header />}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/signin" element={<Signin />} />
-        <Route path="/signup" element={<Signup />} />
-        {/* <Route path="/post/:postId" element={<PostPage />} /> */}
-      </Routes>
+      <LoginProvider>
+        {shouldShowHeader && <Header />}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/signin" element={<Signin />} />
+          <Route path="/signup" element={<Signup />} />
+          {/* <Route path="/post/:postId" element={<PostPage />} /> */}
+        </Routes>
+      </LoginProvider>
     </>
   );
 }
 
 function App() {
   return (
-    <BrowserRouter>
-      <AppContent />
-    </BrowserRouter>
+    <LoginProvider>
+      <BrowserRouter>
+        <AppContent />
+      </BrowserRouter>
+    </LoginProvider>
   );
 }
 

@@ -9,23 +9,35 @@ import {
 import { Input, Button } from "@/shared/components";
 import logo from "@/assets/logo.png";
 import { useNavigate } from "react-router";
+import { useLogin } from "@/shared/context/userContext";
 
 export default function SignIn() {
   const navigate = useNavigate();
+  const { login } = useLogin();
 
   const handleSignIn = async (e) => {
     e.preventDefault();
     const { username, password } = e.target;
 
-    try {
-      const user = await signIn(username.value, password.value);
-      console.log(user);
-      //TODO: 로그인한 사용자 정보를 ContextAPI로 저장하고, 홈으로 이동
-      navigate("/");
-    } catch (error) {
-      console.error(error);
-    }
+    // try {
+    //   const user = await signIn(username.value, password.value);
+    //   console.log("로그인 응답", user);
+    //   //TODO: 로그인한 사용자 정보를 ContextAPI로 저장하고, 홈으로 이동
+
+    //   login(user);
+    //   navigate("/");
+    // } catch (error) {
+    //   console.error("로그인 실패", error);
+    // }
+    const fakeUser = {
+      id: 1,
+      username: username.value,
+    };
+
+    login(fakeUser);
+    navigate("/");
   };
+
   return (
     <div className="w-screen h-screen fixed top-0 left-0 flex items-center justify-center">
       <form onSubmit={handleSignIn}>
@@ -50,7 +62,9 @@ export default function SignIn() {
           </CardContent>
           <CardFooter className="flex justify-center gap-[4px]">
             <Button type="submit">로그인</Button>
-            <Button type="button">회원가입</Button>
+            <Button type="button" onClick={() => navigate("/signup")}>
+              회원가입
+            </Button>
           </CardFooter>
         </Card>
       </form>

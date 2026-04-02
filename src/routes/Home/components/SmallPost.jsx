@@ -7,9 +7,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { TagBadge } from "@/shared/components";
+
 export const SmallPost = ({ post }) => {
   return (
-    <Card className="h-full w-64 relative block group ring-3 ring-transparent border-2 border-box hover:bg-stone-100  hover:border-transparent hover:ring-stone-300 rounded-xl font-medium hover:bg-stone-100 hover:shadow-2xl hover:shadow-gray-300 hover:-translate-y-2 transition-transform duration-500 cursor-pointer">
+    <Card className="h-full w-64 relative block group ring-3 ring-transparent border-2 border-box hover:bg-stone-100  hover:border-transparent hover:ring-stone-300 rounded-xl font-medium hover:shadow-2xl hover:shadow-gray-300 hover:-translate-y-2 transition-transform duration-500 cursor-pointer">
       <CardHeader>
         <CardTitle className="text-2xl font-bold text-start">
           {post.title}
