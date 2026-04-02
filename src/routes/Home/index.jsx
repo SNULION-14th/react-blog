@@ -58,6 +58,10 @@ export default function Home() {
     const newPost = await getPostById(createResponse.postId);
     setPosts((prev) => [...prev, newPost]);
     // console.log("new post", newPost);
+
+    const newTags = await fetchTags();
+    setStoredTags(newTags);
+
     return newPost;
   };
 
