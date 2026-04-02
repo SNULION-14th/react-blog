@@ -54,11 +54,8 @@ export default function Home() {
       const createResponse = await createPost(payload);
       const newPost = await getPostById(createResponse.postId);
 
-      setPosts((prev) => [newPost, ...prev]);
-    } catch (error) {
-      console.error("게시글 작성 중 에러 발생:", error);
-      alert("서버 오류가 발생했습니다. 터미널을 확인하세요.");
-    }
+      setPosts((prev) => [...prev, newPost]);
+    } catch (error) {}
   };
 
   const filteredTags = tags.filter((tag) =>
@@ -112,7 +109,7 @@ export default function Home() {
       {/* TODO: 로그인한 사용자만 게시글 작성 버튼 표시 */}
       {/* TODO: PostDialog 컴포넌트 구현 */}
       {user && (
-        <div className="fixed bottom-8 left-1/2 -translate-x-1/2">
+        <div className="flex justify-center mt-16 mb-10">
           {/* <PostDialog onSubmit={(post) => handleCreatePost(post, user)} /> */}
           <PostDialog onSubmit={handleCreatePost} />
         </div>

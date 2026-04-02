@@ -55,7 +55,7 @@ export function PostDialog({ onSubmit }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="rounded-full shadow-lg p-6 text-lg">작성하기</Button>
+        <Button className="rounded-full shadow-lg p-6 text-lg">작성</Button>
       </DialogTrigger>
 
       <DialogContent>
