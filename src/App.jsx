@@ -6,7 +6,6 @@ import Signin from "./routes/SignIn";
 import Signup from "./routes/SignUp";
 import { LoggedInUserProvider } from "@/context/LoggedInUser";
 
-// import PostPage from "./routes/Post";
 function AppContent() {
   const location = useLocation();
 
@@ -21,7 +20,6 @@ function AppContent() {
         <Route path="/" element={<Home />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
-        {/* <Route path="/post/:postId" element={<PostPage />} /> */}
       </Routes>
     </>
   );
@@ -31,7 +29,6 @@ function App() {
   return (
     <BrowserRouter>
       <LoggedInUserProvider>
-        {/* user로 접근할수 있게 감싸주기 */}
         <AppContent />
       </LoggedInUserProvider>
     </BrowserRouter>

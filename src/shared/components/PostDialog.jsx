@@ -24,7 +24,6 @@ export const PostDialog = ({ isOpen, onClose, onSubmit }) => {
       <div className="bg-white rounded-lg p-6 w-[500px] flex flex-col gap-4">
         <div className="flex justify-between items-center">
           <h2 className="text-lg font-bold">게시글 작성</h2>
-          {/* 클릭하면 onClose 실행 → Home의 setIsOpen(false) → 모달 닫힘 */}
           <button onClick={onClose}>✕</button>
         </div>
         <Input

@@ -9,7 +9,6 @@ import { LoggedInUserContext } from "@/context/LoggedInUser";
 export const Header = () => {
   const isMobile = useMediaQuery("(max-width: 640px)");
   const { user, setUser } = useContext(LoggedInUserContext);
-  // 로그인 상태에 따라 버튼을 바꾸고, 로그아웃 기능 추가
   const handleLogout = () => {
     setUser(null);
   };

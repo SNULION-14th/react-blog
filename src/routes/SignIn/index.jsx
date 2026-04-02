@@ -15,7 +15,6 @@ import { LoggedInUserContext } from "@/context/LoggedInUser";
 export default function SignIn() {
   const navigate = useNavigate();
   const { setUser } = useContext(LoggedInUserContext);
-  // set user 꺼내오기
 
   const handleSignIn = async (e) => {
     e.preventDefault();
