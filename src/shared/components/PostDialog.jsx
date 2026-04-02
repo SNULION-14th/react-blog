@@ -1,159 +1,70 @@
 //TODO: 게시글 작성 모달 다이얼로그 구현
-// import { useState } from "react";
-// import { Button } from "@/shared/components";
-// import {
-//   Dialog,
-//   DialogTrigger,
-//   DialogContent,
-//   DialogHeader,
-//   DialogTitle,
-//   DialogDescription,
-//   DialogFooter,
-// } from "@/components/ui/dialog";
-// import { Label } from "@/shared/components";
-// import { Input } from "@/shared/components";
-// import { Textarea } from "@/shared/components";
-// import { Title } from "@radix-ui/react-dialog";
-// import { TagBadge } from "@/shared/components";
-
-// export function PostDialog({ onSubmit }) {
-//   const [title, setTitle] = useState("");
-//   const [content, setContent] = useState("");
-//   const [tag, setTag] = useState("");
-//   const [tags, setTags] = useState([]);
-//   const handleSubmit = () => {
-//     onSubmit({
-//       title,
-//       content,
-//       tags,
-//     });
-//   };
-//   return (
-//     <Dialog>
-//       <DialogTrigger asChild>
-//         <Button>작성하기</Button>
-//       </DialogTrigger>
-//       <DialogContent>
-//         <DialogTitle className="flex text-2xl font-bold">
-//           게시글 작성
-//         </DialogTitle>
-//         <Input
-//           id="title"
-//           type="text"
-//           placeholder="제목을 입력하세요"
-//           value={title}
-//           onChange={(e) => setTitle(e.target.value)}
-//         />
-//         <Input
-//           id="content"
-//           type="text"
-//           placeholder="내용을 입력하세요"
-//           value={content}
-//           onChange={(e) => setContent(e.target.value)}
-//         />
-//         <Input
-//           placeholder="태그 입력 후 Enter"
-//           value={tag}
-//           onChange={(e) => setTag(e.target.value)}
-//           onKeyDown={(e) => {
-//             if (e.key === "Enter") {
-//               e.preventDefault();
-
-//               if (!tag.trim()) return;
-
-//               setTags((prev) => [
-//                 ...prev,
-//                 {
-//                   id: Date.now(),
-//                   content: tag.trim(),
-//                 },
-//               ]);
-
-//               setTag("");
-//             }
-//           }}
-//         />
-
-//         <div className="mt-2 flex flex-wrap gap-2">
-//           {tags.map((item) => (
-//             <TagBadge tag={item} />
-//           ))}
-//         </div>
-
-//         <div className="mt-4 flex justify-end">
-//           <Button onClick={handleSubmit}>작성하기</Button>
-//         </div>
-//       </DialogContent>
-//     </Dialog>
-//   );
-// }
-
-// export default PostDialog;
 import { useState } from "react";
 import { Button, Input, Textarea, TagBadge } from "@/shared/components";
 import {
   Dialog,
   DialogTrigger,
+  DialogHeader,
   DialogContent,
   DialogTitle,
+  DialogFooter,
 } from "@/components/ui/dialog";
 
 export function PostDialog({ onSubmit }) {
   const [open, setOpen] = useState(false);
-
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [tag, setTag] = useState("");
-  const [tags, setTags] = useState([]);
+  const [tagInput, setTagInput] = useState("");
+  const [selectedTags, setSelectedTags] = useState([]);
 
-  const handleSubmit = async () => {
-    if (!title.trim() || !content.trim()) return;
+  // 태그 추가
+  const handleAddTag = (e) => {
+    if (e.key === "Enter" && tagInput.trim() !== "") {
+      e.preventDefault();
 
-    await onSubmit({
-      title,
-      content,
-      tags,
-    });
-
-    setTitle("");
-    setContent("");
-    setTag("");
-    setTags([]);
-    setOpen(false);
+      if (!selectedTags.find((tag) => tag.content === tagInput.trim())) {
+        const newTag = {
+          id: Date.now(), // 임시 ID
+          content: tagInput.trim(),
+        };
+        setSelectedTags([...selectedTags, newTag]);
+      }
+      setTagInput("");
+    }
   };
 
-  const handleAddTag = (e) => {
-    if (e.key !== "Enter") return;
-    e.preventDefault();
+  // 태그 삭제
+  const removeTag = (idToRemove) => {
+    setSelectedTags(selectedTags.filter((tag) => tag.id !== idToRemove));
+  };
 
-    const trimmedTag = tag.trim();
-    if (!trimmedTag) return;
-
-    setTags((prev) => {
-      const alreadyExists = prev.some((item) => item.content === trimmedTag);
-
-      if (alreadyExists) return prev;
-
-      return [
-        ...prev,
-        {
-          id: Date.now(),
-          content: trimmedTag,
-        },
-      ];
+  // 작성 완료 버튼 클릭
+  const handleSubmit = () => {
+    // const tagsToSend = selectedTags.map((tag) => tag.content);
+    onSubmit({
+      title,
+      content,
+      tags: selectedTags,
     });
-
-    setTag("");
+    setTitle("");
+    setContent("");
+    setSelectedTags([]);
+    setOpen(false);
   };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>작성하기</Button>
+        <Button className="rounded-full shadow-lg p-6 text-lg">작성하기</Button>
       </DialogTrigger>
 
       <DialogContent>
-        <DialogTitle className="text-2xl font-bold">게시글 작성</DialogTitle>
+        <DialogHeader>
+          <DialogTitle className="text-2xl font-bold">게시글 작성</DialogTitle>
+          <div className="hidden">
+            새로운 게시글의 제목과 내용, 태그를 입력합니다.
+          </div>
+        </DialogHeader>
 
         <Input
           id="title"
@@ -172,20 +83,26 @@ export function PostDialog({ onSubmit }) {
 
         <Input
           placeholder="태그 입력 후 Enter"
-          value={tag}
-          onChange={(e) => setTag(e.target.value)}
-          onKeyDown={handleAddTag}
+          value={tagInput}
+          onChange={(e) => setTagInput(e.target.value)}
+          onKeyUp={handleAddTag}
         />
 
         <div className="mt-2 flex flex-wrap gap-2">
-          {tags.map((item) => (
-            <TagBadge key={item.id} tag={item} />
+          {selectedTags.map((item) => (
+            <TagBadge
+              key={item.id}
+              tag={item}
+              onClick={() => removeTag(item.id)}
+              className="cursor-pointer hover:opacity-70 transition"
+            />
           ))}
         </div>
-
-        <div className="mt-4 flex justify-end">
-          <Button onClick={handleSubmit}>작성하기</Button>
-        </div>
+        <DialogFooter>
+          <div className="mt-4 flex justify-end">
+            <Button onClick={handleSubmit}>작성하기</Button>
+          </div>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

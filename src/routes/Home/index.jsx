@@ -40,16 +40,37 @@ export default function Home() {
     setSearchInput(value);
   };
 
-  const handleCreatePost = async (post, author) => {
-    const createResponse = await createPost({
-      ...post,
-      author,
-    });
+  // const handleCreatePost = async (post, author) => {
+  //   const createResponse = await createPost({
+  //     ...post,
+  //     author,
+  //   });
 
-    const newPost = await getPostById(createResponse.postId);
-    console.log("new post", newPost);
+  //   const newPost = await getPostById(createResponse.postId);
+  //   console.log("new post", newPost);
 
-    setPosts((prev) => [newPost, ...prev]);
+  //   setPosts((prev) => [newPost, ...prev]);
+  // };
+
+  const handleCreatePost = async (postData) => {
+    if (!user) return;
+
+    try {
+      const payload = {
+        title: postData.title,
+        content: postData.content,
+        author: user.username,
+        tags: postData.tags.map((tag) => tag.content),
+      };
+      console.log("서버로 보내는 payload:", payload);
+      const createResponse = await createPost(payload);
+      const newPost = await getPostById(createResponse.postId);
+
+      setPosts((prev) => [newPost, ...prev]);
+    } catch (error) {
+      console.error("게시글 작성 중 에러 발생:", error);
+      alert("서버 오류가 발생했습니다. 터미널을 확인하세요.");
+    }
   };
 
   const filteredTags = tags.filter((tag) =>
@@ -105,9 +126,7 @@ export default function Home() {
       {user && (
         <div className="fixed bottom-8 left-1/2 -translate-x-1/2">
           {/* <PostDialog onSubmit={(post) => handleCreatePost(post, user)} /> */}
-          <PostDialog
-            onSubmit={(post) => handleCreatePost(post, user?.username)}
-          />
+          <PostDialog onSubmit={handleCreatePost} />
         </div>
       )}
     </div>

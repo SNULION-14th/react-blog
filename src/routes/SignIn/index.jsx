@@ -19,23 +19,16 @@ export default function SignIn() {
     e.preventDefault();
     const { username, password } = e.target;
 
-    // try {
-    //   const user = await signIn(username.value, password.value);
-    //   console.log("로그인 응답", user);
-    //   //TODO: 로그인한 사용자 정보를 ContextAPI로 저장하고, 홈으로 이동
+    try {
+      const user = await signIn(username.value, password.value);
+      console.log("로그인 응답", user);
+      //TODO: 로그인한 사용자 정보를 ContextAPI로 저장하고, 홈으로 이동
 
-    //   login(user);
-    //   navigate("/");
-    // } catch (error) {
-    //   console.error("로그인 실패", error);
-    // }
-    const fakeUser = {
-      id: 1,
-      username: username.value,
-    };
-
-    login(fakeUser);
-    navigate("/");
+      login(user);
+      navigate("/");
+    } catch (error) {
+      console.error("로그인 실패", error);
+    }
   };
 
   return (
