@@ -2,22 +2,30 @@ import lion from "@/assets/lion.jpeg";
 import { useMediaQuery } from "@/shared/hooks";
 import { Button } from "@/shared/components";
 import { Link } from "react-router-dom";
+import { LogOut as LogOutIcon } from "lucide-react";
+import { useUser } from "../context";
 
 export const Header = () => {
   const isMobile = useMediaQuery("(max-width: 640px)");
-  // 로그인 여부 상태, 우선 false로 초기화
+  const { user, logout } = useUser();
 
   return (
-    <div
-      className={`sticky bg-white shadow-accent shadow-lg top-0 left-0 z-50 flex items-center justify-between w-full gap-5 px-5 py-2.5 h-20`}
-    >
+    <div className="sticky bg-white shadow-accent shadow-lg top-0 left-0 z-50 flex items-center justify-between w-full gap-5 px-5 py-2.5 h-20">
       <Link to="/">
         <div className="flex flex-row items-center gap-5">
           <img src={lion} alt="lion" className="max-h-16 rounded-full" />
           <div className="text-xl">SNULION BLOG</div>
         </div>
       </Link>
-      {isMobile ? null : (
+
+      {isMobile ? null : user ? (
+        <div className="flex flex-row gap-5">
+          <Button onClick={logout}>
+            <LogOutIcon className="w-4 h-4 mr-1" />
+            로그아웃
+          </Button>
+        </div>
+      ) : (
         <div className="flex flex-row gap-5">
           <Link to="/signin">
             <Button>sign in</Button>
